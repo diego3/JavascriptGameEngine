@@ -5,10 +5,15 @@
  * 
  * sobre game loop -> https://developer.mozilla.org/en-US/docs/Games/Anatomy
  */
+
+window.onload = function() {
 var A = 97;
 var D = 100;
 var S = 115;
 var W = 119;
+var BOOTSTRAP_GREEN = "#419641";
+var BOOTSTRAP_RED   = "#d9534f";
+var JQUERY_BLUE = "#25649F";
 
 var GE_rect = function(x, y, w, h) {
     var x = x || 0;
@@ -16,6 +21,7 @@ var GE_rect = function(x, y, w, h) {
     var width = w || 40;
     var height = h || 40;
     var speed = randomIntFromInterval(3, 10);
+    var color = "#000000";
     
     this.update = function(delta) {
         console.log("y = " + y + " height = " + canvas.height);
@@ -24,6 +30,7 @@ var GE_rect = function(x, y, w, h) {
             x = randomIntFromInterval(width, canvas.width - width);
             y = -50;
             speed = randomIntFromInterval(3, 10);
+            color = colors[randomIntFromInterval(0, color.length-1)];
         }
         else if(y <= canvas.height){
             y += speed;
@@ -32,18 +39,25 @@ var GE_rect = function(x, y, w, h) {
     };
     
     this.render = function (ctx) {
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = color;
         ctx.fillRect(x, y, width, height);
     };
     
+    this.setColor = function(newColor){
+        color = newColor;
+    };
+    
+    this.getColor = function() {
+        return this.color;
+    };
 };
 
-window.onload = function() {
+
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext('2d');
     
     var objetos = [];
-    
+    var colors = [BOOTSTRAP_GREEN, BOOTSTRAP_RED, JQUERY_BLUE];
     var requestId;
     var lastUpdate;
     var loop = function() {
@@ -77,11 +91,11 @@ window.onload = function() {
      * criacao de objetos iniciais, imagens, sons etc...
      */
     var init = function() {
-        var randPos = randomIntFromInterval(1, 800);
-        var rec = new GE_rect(randPos);
+        var rec = new GE_rect(randomIntFromInterval(1, 800));
         objetos.push(rec);
         
-        var rec2 = new GE_rect(randPos);
+        var rec2 = new GE_rect(randomIntFromInterval(1, 800));
+        rec2.setColor("blue");
         objetos.push(rec2);
     };
     
@@ -105,10 +119,8 @@ window.onload = function() {
     document.getElementById("stop").addEventListener("click", function(){
        stop();
     });
-    
-    
 };
 
 function randomIntFromInterval(min,max) {
     return Math.floor(Math.random()*(max-min+1)+min);
-}
+} 
