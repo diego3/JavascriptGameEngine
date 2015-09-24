@@ -6,14 +6,18 @@
  * sobre game loop -> https://developer.mozilla.org/en-US/docs/Games/Anatomy
  */
 
-window.onload = function() {
 var A = 97;
 var D = 100;
 var S = 115;
 var W = 119;
+var UP = 38;
+var DOWN = 40;
+var RIGHT = 39;
+var LEFT = 37;
+
 var BOOTSTRAP_GREEN = "#419641";
 var BOOTSTRAP_RED   = "#d9534f";
-var JQUERY_BLUE = "#25649F";
+var JQUERY_BLUE     = "#25649F";
 
 var GE_rect = function(x, y, w, h) {
     var x = x || 0;
@@ -24,13 +28,11 @@ var GE_rect = function(x, y, w, h) {
     var color = "#000000";
     
     this.update = function(delta) {
-        console.log("y = " + y + " height = " + canvas.height);
         if(y >= canvas.height){
-            console.log("passou por baixo");
             x = randomIntFromInterval(width, canvas.width - width);
             y = -50;
             speed = randomIntFromInterval(3, 10);
-            color = colors[randomIntFromInterval(0, color.length-1)];
+            color = colors[randomIntFromInterval(0, colors.length-1)];
         }
         else if(y <= canvas.height){
             y += speed;
@@ -50,12 +52,23 @@ var GE_rect = function(x, y, w, h) {
     this.getColor = function() {
         return this.color;
     };
+    
+    this.getX = function(){
+        return this.x;
+    };
+    
+    this.getY = function(){
+        return this.y;
+    };
+    
 };
-
-
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext('2d');
+    canvas.addEventListener("mousedown", onMouseDown, true);
+    canvas.addEventListener("mousemove", onMouseMove, true);
+    canvas.addEventListener("mouseup", onMouseUp, true);
     
+    var lastPressedKey;
     var objetos = [];
     var colors = [BOOTSTRAP_GREEN, BOOTSTRAP_RED, JQUERY_BLUE];
     var requestId;
@@ -119,8 +132,28 @@ var GE_rect = function(x, y, w, h) {
     document.getElementById("stop").addEventListener("click", function(){
        stop();
     });
-};
+    document.addEventListener("keyup", function(evt){
+       lastPressedKey = evt.keyCode || evt.which;
+       console.log("lastPressedKey = " + lastPressedKey);
+    });
+    
 
 function randomIntFromInterval(min,max) {
     return Math.floor(Math.random()*(max-min+1)+min);
-} 
+}
+
+function onMouseDown (evt) {
+    var x = evt.x;
+    var y = evt.y;
+    x -= canvas.offsetLeft;
+    y -= canvas.offsetTop;
+    console.log("x = " + x + "  y = " + y );
+};
+
+function onMouseMove(evt) {
+
+};
+
+function onMouseUp(evt) {
+
+};
