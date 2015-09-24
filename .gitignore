@@ -1,0 +1,17 @@
+nbproject/private/
+nbproject/
+nbproject/project.properties
+tmp/
+vendor/
+composer.lock
+/composer.lock
+/composer.phar
+/.idea
+build/coverage
+build/logs
+cache.properties
+/bin
+*.local.ini
+*.local.php
+php.ini
+
