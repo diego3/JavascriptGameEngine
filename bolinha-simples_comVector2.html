@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gaming 2D</title>
+        <style type="text/css">
+            canvas {
+                border: 1px solid #000000;
+            }
+        </style>
+    </head>   
+    <body>
+        <canvas id="canvas" width="600" height="480">
+
+        </canvas>
+
+        <script type="text/javascript">
+
+            var canvas, barraW, barraH,
+                    ctx, jogadorX, bolaX, bolaY, pontos,
+                    velocidadeY,
+                    gravity, vy, radians, angle, speed, elasticity, velocidadeX, vento = false;
+
+            document.addEventListener('keydown', keyDown);
+
+            function inicializar() {
+                canvas = document.getElementById("canvas");
+                ctx = canvas.getContext('2d');
+                barraH = 15;
+                barraW = 600;
+                jogadorX = (canvas.width - barraW) / 2;//( 600 - 90) /2 -> 510/2 = 255
+                bolaX = canvas.width / 2;
+                bolaY = 200;
+                pontos = 0;
+                radius = 15;
+
+                speed = 2;
+                gravity = 0.98;
+                angle = 30;
+                elasticity = .5;
+                radians = angle * Math.PI / 180;
+                vy = Math.sin(radians) * speed;
+                velocidadeY = vy;
+                velocidadeX = 0;
+
+                console.log('velocidadeY', velocidadeY);
+                console.log('Math.sin(radians)', Math.sin(radians));
+
+                document.addEventListener('keydown', keyDown);
+                loop();
+            }
+
+            function loop() {
+                draw();
+                updates();
+                //window.setTimeout(loop,30);
+                window.requestAnimationFrame(loop);
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                //jogador
+                ctx.fillRect(jogadorX, canvas.height - 15, barraW, barraH);//player
+                
+                //desenha bola
+                ctx.beginPath();
+                ctx.arc(bolaX, bolaY, radius, 0, Math.PI * 2, true);
+                ctx.fill();
+
+                //desenha a pontuação
+                ctx.font = "24pt Tahoma";
+                ctx.fillText(pontos, canvas.width - 70, 50);
+            }
+
+            function updates() {
+                velocidadeY += gravity;
+
+                if ((bolaY + radius) > (canvas.height - barraH) &&
+                        bolaX > jogadorX &&
+                        bolaX < (jogadorX + barraW)) {
+
+                    velocidadeY = -(velocidadeY); //* elasticity 
+                    pontos += 1;
+                    bolaY += velocidadeY;
+                    console.log('na plataforma', velocidadeY);
+                    //bolaX = rdmX;
+                } else if ((bolaY + radius) > canvas.height) {
+                    bolaY = 200;
+                    //bolaX = Math.random() * 600;
+                    pontos -= 1;
+                    console.log('caiu', bolaY);
+                    velocidadeY = vy;
+                }
+                else if ((bolaX + radius) < 0) {
+                    velocidadeX = -(velocidadeX);
+                    bolaY += velocidadeY;
+                }
+                else if (bolaX > canvas.width) {
+                    velocidadeX = -(velocidadeX);
+                    bolaY += velocidadeY;
+                } else {
+                    bolaY += velocidadeY;
+                }
+
+
+                if (vento) {
+                    bolaX += velocidadeX;
+                }
+            }
+
+
+            function keyDown(e) {
+                var LEFT = 37;
+                var RIGHT = 39;
+                var SPACE = 32;
+                var V = 86;
+
+                if (e.keyCode == LEFT)
+                    jogadorX -= 10;
+                else if (e.keyCode == RIGHT)
+                    jogadorX += 10;
+
+                if (e.keyCode == SPACE)
+                    inicializar();
+                if (e.keyCode == V) {
+                    addVento();
+                    vento = true;
+                }
+
+            }
+            function addVento() {
+                angle = 45;//295
+                elasticity = 0.5;
+                radians = angle * Math.PI / 180;
+                vx = Math.cos(radians) * speed;
+                velocidadeX = vx;
+            }
+
+
+        </script>
+    </body>
+</html>
