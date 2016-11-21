@@ -103,20 +103,6 @@ var GE_rect = function(x, y, w, h) {
         objetos.push(rec2);
     };
     
-    var start = function() {
-        if(!requestId) {
-            init();
-            loop();
-        }
-    };
-    
-    var stop = function() {
-       if(requestId){
-           window.cancelAnimationFrame(requestId);
-           requestId = undefined;
-       }  
-    };
-    
     document.getElementById("start").addEventListener("click", function(){
        start(); 
     });
