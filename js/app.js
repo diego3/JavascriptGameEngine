@@ -5,16 +5,6 @@
  * 
  * sobre game loop -> https://developer.mozilla.org/en-US/docs/Games/Anatomy
  */
-
-var A = 97;
-var D = 100;
-var S = 115;
-var W = 119;
-var UP = 38;
-var DOWN = 40;
-var RIGHT = 39;
-var LEFT = 37;
-
 var BOOTSTRAP_GREEN = "#419641";
 var BOOTSTRAP_RED   = "#d9534f";
 var JQUERY_BLUE     = "#25649F";
@@ -64,7 +54,7 @@ var GE_rect = function(x, y, w, h) {
     
 };
     var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext('2d');
+    var ctx = canvas.getContext('2d');//Convas2DRenderer
     canvas.addEventListener("mousedown", onMouseDown, true);
     canvas.addEventListener("mousemove", onMouseMove, true);
     canvas.addEventListener("mouseup", onMouseUp, true);
