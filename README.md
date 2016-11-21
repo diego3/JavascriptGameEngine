@@ -20,3 +20,5 @@ Links
 
 http://codeincomplete.com/posts/javascript-game-foundations-the-game-loop/
 http://sol.gfxile.net/interpolation/index.html
+canvas docs -> http://www.rgraph.net/reference/fillrect.html
+sobre game loop -> https://developer.mozilla.org/en-US/docs/Games/Anatomy
