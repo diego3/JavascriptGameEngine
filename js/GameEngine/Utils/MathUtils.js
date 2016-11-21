@@ -21,5 +21,5 @@ var MathUtils = {
     },
     easeInOut: function (a, b, percent) {
         return a + (b - a) * ((-Math.cos(percent * Math.PI) / 2) + 0.5);
-    },
+    }
 };

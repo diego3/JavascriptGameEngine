@@ -45,11 +45,13 @@ var InputManager = {
     OnKey: function(ev, key, pressed) {
         switch(key) {
             case KEY.LEFT: 
-                document.trigger("Actor:MoveLeft");
+                //document.trigger("Actor:MoveLeft");
+                
+                console.log("left key");
                 ev.preventDefault(); 
             break;
             case KEY.RIGHT: 
-
+                console.log("right key");
                 ev.preventDefault(); 
                 break;
             case KEY.SPACE: 

@@ -1,7 +1,7 @@
 
 
 var BaseGameLogic = function(){
-    this.actorsMap = [];
+    this.actorsMap = {};
     this.gameViewList = [];
     
 };
@@ -41,3 +41,12 @@ BaseGameLogic.prototype.CreateActor = function(actorId){
     
     
 };
+
+BaseGameLogic.prototype.GetActor = function(actorId){
+    if(this.actorsMap[actorId]){
+        return this.actorsMap[actorId];
+    }
+    return null;
+};
+
+

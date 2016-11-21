@@ -24,7 +24,7 @@ SceneNode.prototype.Render = function(){
 
 
 var RootNode = function(){};
-RootNode.prototype.Extends(SceneNode);
+RootNode.Extends(SceneNode);
 
 
 var Scene = function(){

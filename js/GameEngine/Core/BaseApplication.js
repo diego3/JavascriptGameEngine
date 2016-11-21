@@ -9,6 +9,13 @@ var BaseApplication = function(){
     this.LastError = "";
 };
 
+BaseApplication.prototype.CreateGameAndView = function(){
+    var logic = new BaseGameLogic();
+    var humanView = new HumanView(this.Renderer);
+    logic.AddView(humanView);
+    return logic;
+};
+
 BaseApplication.prototype.Initialize = function(){
     //initialize the canvas
     var canvas = document.getElementById("canvas");
@@ -19,20 +26,15 @@ BaseApplication.prototype.Initialize = function(){
     }
     this.Renderer = ctx;
     
-    this.GameLogic = CreateGameAndView(); 
+    this.GameLogic = this.CreateGameAndView(); 
     if(this.GameLogic === null){
         this.LastError = "GameLogic was not initialized";
     }
     
+    InputManager.Init();
+    
     
     return true;
-};
-
-BaseApplication.prototype.CreateGameAndView = function(){
-    var logic = new BaseGameLogic();
-    var humanView = new HumanView(this.Renderer);
-    logic.AddView(humanView);
-    return logic;
 };
 
 BaseApplication.prototype.Start = function() {
