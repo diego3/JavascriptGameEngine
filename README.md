@@ -14,3 +14,9 @@ Some todos and cool things
 * Base App class, Base Game logic class etc.
 * Asset Manager for caching
 * Tile mapping and level loading ( with screen loading :) )
+
+Links
+=========
+
+http://codeincomplete.com/posts/javascript-game-foundations-the-game-loop/
+http://sol.gfxile.net/interpolation/index.html
