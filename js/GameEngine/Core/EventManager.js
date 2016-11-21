@@ -1,5 +1,5 @@
 
-
+//http://codeincomplete.com/posts/javascript-game-foundations-state-management/
 var EventManager = function(){
     this.delegates = {};
     this.queue = {};
