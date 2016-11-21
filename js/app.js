@@ -19,6 +19,7 @@ var BOOTSTRAP_GREEN = "#419641";
 var BOOTSTRAP_RED   = "#d9534f";
 var JQUERY_BLUE     = "#25649F";
 
+
 var GE_rect = function(x, y, w, h) {
     var x = x || 0;
     var y = y || 0;

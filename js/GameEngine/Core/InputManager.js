@@ -1,0 +1,7 @@
+
+
+var InputManager = {
+    
+    lastPressedKey: null
+    
+};
