@@ -2,7 +2,7 @@
 
 define(function(require){
    
-    
+    require("GameEngine/Core/Heranca1");
     require("GameEngine/Actor/Actor");
     require("GameEngine/Core/EventManager");
     require("GameEngine/Core/InputManager");
@@ -23,6 +23,8 @@ define(function(require){
     
     
     document.getElementById("fire").addEventListener("click",function(evt){
+        console.log("button fire work");
         evtMgr.FireEvent("EVENT1", 88);
+        console.log("EventManager instance", evtMgr);
     });
 });

@@ -18,7 +18,7 @@ EventManager.prototype.Register = function(event, callback){
  * @returns {void}
  */
 EventManager.prototype.FireEvent = function(event){
-    if (this.subscribers && this.subscribers[event]) {
+    if (this.delegates && this.delegates[event]) {
         var subs = this.delegates[event];
         var args = [].slice.call(arguments, 1);
         var n; 
