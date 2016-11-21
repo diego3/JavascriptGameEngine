@@ -42,17 +42,6 @@
         </div>
     </div>
     
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <!script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    
-    <script src="js/GameEngine/Core/Heranca1.js"></script>
-    <script src="js/GameEngine/Math/Vector2.js"></script>
-    
-    <script src="js/GameEngine/Core/BaseApplication.js"></script>
-    <script src="js/GameEngine/Core/BaseGameLogic.js"></script>
-    <script src="js/GameEngine/Actor/Actor.js"></script -->
     <script src="js/GameEngine/3rdParty/toji-gl-matrix-2aa7274/dist/gl-matrix.js"></script>
     <script data-main="js/app" src="js/GameEngine/3rdParty/requirejs.js"></script>
     
