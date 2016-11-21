@@ -31,6 +31,8 @@ BaseApplication.prototype.Initialize = function(){
         this.LastError = "GameLogic was not initialized";
     }
     
+    //create the EventManager over here
+    
     InputManager.Init();
     
     
@@ -59,17 +61,19 @@ BaseApplication.prototype.GameLoop = function(){
     var t = new Date().getTime();
     var delta = t - this.LastUpdate;
     this.UpdateFrame(delta);
-    this.RenderFrame();
+    this.RenderFrame(delta);
     this.LastUpdate = new Date().getTime();
     this.RequestAnimId = window.requestAnimationFrame(this.GameLoop);
 };
 
 BaseApplication.prototype.UpdateFrame = function(fDeltaTime){
+    console.log("UpdateFrame", fDeltaTime);
     /*for(var Actor in this.actors){
         Actor.Update(fDeltaTime);
     }*/
 };
 
-BaseApplication.prototype.RenderFrame = function(){
+BaseApplication.prototype.RenderFrame = function(fDeltaTime){
+    console.log("RenderFrame", fDeltaTime);
     
 };

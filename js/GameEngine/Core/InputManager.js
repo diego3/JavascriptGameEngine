@@ -40,7 +40,15 @@ var InputManager = {
 
         document.addEventListener('keyup', function(ev) { 
             return InputManager.OnKey(ev, ev.keyCode, false); 
-        }, false);  
+        }, false);
+        
+        document.getElementById("start").addEventListener("click", function(evt){
+            
+        }, false);
+        
+        document.getElementById("stop").addEventListener("click", function(evt){
+            
+        }, false);
     },
     OnKey: function(ev, key, pressed) {
         switch(key) {

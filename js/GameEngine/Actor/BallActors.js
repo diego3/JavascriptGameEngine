@@ -1,10 +1,10 @@
 
 
 var Ball = function(){};
-Ball.prototype.Extends(Actor);
+Ball.Extends(Actor);
 
 var BallRendererComponent = function(){};
-BallRendererComponent.prototype.Extends(RenderComponent);
+BallRendererComponent.Extends(RenderComponent);
 
 BallRendererComponent.prototype.Render = function(){
     
