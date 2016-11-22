@@ -15,3 +15,15 @@ Function.prototype.Extends = function( parentClassOrObject ){
     } 
     return this;
 }; 
+
+// Useful for making the "arguments" object a true array and also for creating a
+// copy of an existing array.
+function _toArray8484dssds254(obj) {
+    return Array.prototype.slice.call(obj);
+}
+//http://fitzgeraldnick.com/2010/05/20/javascript-bind-and-this.html
+function MAKEDELEGATE(scope, fn) {
+    return function () {
+        return fn.apply(scope, _toArray8484dssds254(arguments));
+    };
+}

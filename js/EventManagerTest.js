@@ -13,18 +13,16 @@ define(function(require){
         this.m_id = id;
     };
     Player.Extends(Actor);
-    Player.prototype.DoSomethingCoolDelegate = function(params){
+    var DoSomethingCoolDelegate = function(params){
         console.log("I'am receiving ", params, "params");
+        console.log("Player id", this.m_id);
     };
     
     var hero = new Player(123456);
-    
-    evtMgr.Register("EVENT1", hero.DoSomethingCoolDelegate);
-    
+    evtMgr.Register("EVENT1", MAKEDELEGATE(hero, DoSomethingCoolDelegate));
     
     document.getElementById("fire").addEventListener("click",function(evt){
         console.log("button fire work");
-        evtMgr.FireEvent("EVENT1", 88);
-        console.log("EventManager instance", evtMgr);
+        evtMgr.FireEvent("EVENT1", 88, "string");
     });
 });

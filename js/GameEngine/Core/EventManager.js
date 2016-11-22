@@ -25,7 +25,8 @@ EventManager.prototype.FireEvent = function(event){
         var max;
         
         for(n = 0, max = subs.length ; n < max ; n++){
-            subs[n].apply(target, args);
+            subs[n](args);
+            //subs[n].apply(target, args);
         }
     }
 };
