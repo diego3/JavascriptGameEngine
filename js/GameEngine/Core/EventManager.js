@@ -42,9 +42,11 @@ EventManager.prototype.Queue = function(event){
 };
 
 
-var Event = {
+var GameEvent = {
     START_GAME:1,
     PAUSE_GAME:2,
-    LEVEL_LOADING:3
+    LEVEL_LOADING:3,
+    
+    ACTOR_MOVE:4
     
 };

@@ -2,8 +2,13 @@
  * This is the entry point to your game!
  * 
  */
+
+var g_GameApp = null;
+var g_evtMgr = null;
+
 define(function(require){ 
     require("./GameEngine/Core/Heranca1");
+    require("./GameEngine/Core/EventManager");
     require("./GameEngine/Core/InputManager");
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
@@ -13,7 +18,7 @@ define(function(require){
     require("./GameEngine/Core/BaseGameLogic");
     require("./GameEngine/Core/BaseApplication");
     
-    var g_GameApp = new BaseApplication();
+    g_GameApp = new BaseApplication();
     //console.log(g_GameApp);
     
     g_GameApp.Initialize();

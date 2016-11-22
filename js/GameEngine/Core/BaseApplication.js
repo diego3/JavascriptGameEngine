@@ -2,11 +2,14 @@
 
 var BaseApplication = function(){
     this.IsRunning = false;
+    this.IsInitialized = false;
     this.RequestAnimId = 0;
     this.GameLogic = null;
     this.Renderer = null;
+    this.EventManager = null;
     this.LastUpdate = 0;
     this.LastError = "";
+    
 };
 
 BaseApplication.prototype.CreateGameAndView = function(){
@@ -32,16 +35,26 @@ BaseApplication.prototype.Initialize = function(){
     }
     
     //create the EventManager over here
+    this.EventManager = new EventManager();
+    g_evtMgr = this.EventManager;
     
     InputManager.Init();
     
+    this.RegisterDelegates();
     
+    this.IsInitialized = true;
     return true;
 };
 
-BaseApplication.prototype.Start = function() {
+BaseApplication.prototype.RegisterDelegates = function(){
+    g_evtMgr.Register(GameEvent.START_GAME, MAKEDELEGATE(this, Start));
+    
+};
+
+//BaseApplication.prototype.
+var Start = function() {
     if(!this.RequestAnimId) {
-        if(this.Initialize()){
+        if(this.IsInitialized){
             this.GameLoop();
         }
         else{
@@ -57,15 +70,6 @@ BaseApplication.prototype.StopFrame = function() {
     }  
 };
 
-BaseApplication.prototype.GameLoop = function(){
-    var t = new Date().getTime();
-    var delta = t - this.LastUpdate;
-    this.UpdateFrame(delta);
-    this.RenderFrame(delta);
-    this.LastUpdate = new Date().getTime();
-    this.RequestAnimId = window.requestAnimationFrame(this.GameLoop);
-};
-
 BaseApplication.prototype.UpdateFrame = function(fDeltaTime){
     console.log("UpdateFrame", fDeltaTime);
     /*for(var Actor in this.actors){
@@ -77,3 +81,15 @@ BaseApplication.prototype.RenderFrame = function(fDeltaTime){
     console.log("RenderFrame", fDeltaTime);
     
 };
+
+BaseApplication.prototype.GameLoop = function(){
+    var t = new Date().getTime();
+    var delta = t - g_GameApp.LastUpdate;
+    g_GameApp.UpdateFrame(delta);
+    g_GameApp.RenderFrame(delta);
+    g_GameApp.LastUpdate = new Date().getTime();
+    g_GameApp.RequestAnimId = window.requestAnimationFrame(g_GameApp.GameLoop);
+};
+
+
+

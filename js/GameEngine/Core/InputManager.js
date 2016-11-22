@@ -42,24 +42,24 @@ var InputManager = {
             return InputManager.OnKey(ev, ev.keyCode, false); 
         }, false);
         
+        //todo mouse events 
+        
         document.getElementById("start").addEventListener("click", function(evt){
-            
+            g_evtMgr.FireEvent(GameEvent.START_GAME);
         }, false);
         
         document.getElementById("stop").addEventListener("click", function(evt){
-            
+            g_evtMgr.FireEvent(GameEvent.PAUSE_GAME);
         }, false);
     },
     OnKey: function(ev, key, pressed) {
         switch(key) {
             case KEY.LEFT: 
-                //document.trigger("Actor:MoveLeft");
-                
-                console.log("left key");
+                g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
                 ev.preventDefault(); 
             break;
             case KEY.RIGHT: 
-                console.log("right key");
+                g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, 1);
                 ev.preventDefault(); 
                 break;
             case KEY.SPACE: 
