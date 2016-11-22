@@ -1,0 +1,5 @@
+<Material name="sample1">
+    <Color r="255" g="0" b="0" a="1"/>
+    <Texture src="Assets/Art/" />
+    <!-- Shader src="Assets/Shader/"/-->
+</Material>

@@ -1,3 +1,4 @@
+/* global GameEvent, g_evtMgr */
 var KEY = {
     BACKSPACE: 8,
     TAB: 9,
@@ -43,6 +44,12 @@ var InputManager = {
         }, false);
         
         //todo mouse events 
+        var canvas = document.getElementById("canvas");
+        console.log(canvas);
+        canvas.addEventListener("onblur", function(evt){
+            console.log("Canvas focus out");
+            g_evtMgr.FireEvent(GameEvent.PAUSE_GAME);
+        }, false);
         
         document.getElementById("start").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(GameEvent.START_GAME);
@@ -55,15 +62,18 @@ var InputManager = {
     OnKey: function(ev, key, pressed) {
         switch(key) {
             case KEY.LEFT: 
+                this.lastPressedKey = pressed ? KEY.LEFT : null;
                 g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
                 ev.preventDefault(); 
             break;
-            case KEY.RIGHT: 
+            case KEY.RIGHT:
+                this.lastPressedKey = pressed ? KEY.RIGHT : null;
                 g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, 1);
                 ev.preventDefault(); 
                 break;
             case KEY.SPACE: 
-
+                this.lastPressedKey = pressed ? KEY.SPACE : null;
+                
                 ev.preventDefault(); 
             break;
         }

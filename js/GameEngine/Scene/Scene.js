@@ -54,6 +54,11 @@ SceneNode.prototype.Update = function(Scene, fDeltaTime){
 var RootNode = function(){};
 RootNode.Extends(SceneNode);
 
+RootNode.prototype.Render = function(){
+    
+};
+
+
 /**
  * The top-level management of the entire scene node hierarchy rests in the capable
  * hands of the Scene class. It serves as the top-level entry point for updating, render-
