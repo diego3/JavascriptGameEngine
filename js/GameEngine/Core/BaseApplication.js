@@ -1,5 +1,7 @@
 
 
+/* global g_GameApp, InputManager, GameEvent */
+
 var BaseApplication = function(){
     this.IsRunning = false;
     this.IsInitialized = false;
@@ -14,6 +16,7 @@ var BaseApplication = function(){
 
 BaseApplication.prototype.CreateGameAndView = function(){
     var logic = new BaseGameLogic();
+    logic.Init();
     var humanView = new HumanView(this.Renderer);
     logic.AddView(humanView);
     return logic;
@@ -32,6 +35,7 @@ BaseApplication.prototype.Initialize = function(){
     this.GameLogic = this.CreateGameAndView(); 
     if(this.GameLogic === null){
         this.LastError = "GameLogic was not initialized";
+        return false;
     }
     
     //create the EventManager over here
@@ -47,12 +51,13 @@ BaseApplication.prototype.Initialize = function(){
 };
 
 BaseApplication.prototype.RegisterDelegates = function(){
-    g_evtMgr.Register(GameEvent.START_GAME, MAKEDELEGATE(this, Start));
+    g_evtMgr.Register(GameEvent.START_GAME, MAKEDELEGATE(this, StartGameDelegate));
+    g_evtMgr.Register(GameEvent.PAUSE_GAME, MAKEDELEGATE(this, StopFrameDelegate));
     
 };
 
 //BaseApplication.prototype.
-var Start = function() {
+var StartGameDelegate = function() {
     if(!this.RequestAnimId) {
         if(this.IsInitialized){
             this.GameLoop();
@@ -63,7 +68,8 @@ var Start = function() {
     }
 };
 
-BaseApplication.prototype.StopFrame = function() {
+//BaseApplication.prototype.
+var StopFrameDelegate = function() {
     if(this.RequestAnimId){
         window.cancelAnimationFrame(this.RequestAnimId);
         this.RequestAnimId = undefined;

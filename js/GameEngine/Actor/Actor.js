@@ -28,6 +28,10 @@ Actor.prototype.Update = function(fDeltaTime){
     }
 };
 
+Actor.prototype.GetId = function(){
+    return this.m_id;
+};
+
 Actor.prototype.AddComponent = function(/*IComponent*/ component){
     this.components[component.getName()] = component;
 };

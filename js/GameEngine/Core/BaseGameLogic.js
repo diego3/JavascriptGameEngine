@@ -3,7 +3,11 @@
 var BaseGameLogic = function(){
     this.actorsMap = {};
     this.gameViewList = [];
-    
+    this.actorFactory = null;
+};
+
+BaseGameLogic.prototype.Init = function(){
+    this.actorFactory = new ActorFactory();
 };
 
 BaseGameLogic.prototype.OnActorMoveDelegate = function(actorId, vec2){
