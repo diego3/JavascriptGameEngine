@@ -13,7 +13,7 @@ var Random = {
   },
 
   Bool: function() {
-    return this.randomChoice([true, false]);
+    return this.Choise([true, false]);
   }
   
 };
