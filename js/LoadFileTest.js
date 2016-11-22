@@ -10,6 +10,11 @@ define(function(require){
     
     var factory = new ActorFactory();
     
+    //http://robdodson.me/javascript-design-patterns-factory/
+    var factoryClassName = "ActorFactory";
+    var factoryInstance = Object.create(ActorFactory);
+    console.log(factoryInstance);
+           
     document.getElementById("load").addEventListener("click",function(evt){
         console.log("button LOAD work");
         
