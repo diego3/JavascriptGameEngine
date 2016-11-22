@@ -1,11 +1,15 @@
 
 
-var SceneNode = function(){
+/* global g_evtMgr */
+
+var SceneNode = function(parent, renderComponent){
     this.childs = [];
-    this.parentNode = null;
+    this.parentNode = parent || null;
+    this.renderComponent = renderComponent || null;
 };
 
 SceneNode.prototype.AddChild = function(node){
+    node.parentNode = this;
     this.childs.push(node);
 };
 
@@ -50,13 +54,27 @@ SceneNode.prototype.Update = function(Scene, fDeltaTime){
 
 
 
-
+/*
+ * Manages children as separate render passes for different
+ * kinds of scene nodes.
+ * 
+ * The root node is the top-level scene node 
+ * in the entire scene graph. There is some special code 
+ * associated with the root node. 
+ * For now, you can consider the root node as the same kind of 
+ * object that all tree-like data structures have. 
+ */
 var RootNode = function(){};
 RootNode.Extends(SceneNode);
 
 RootNode.prototype.Render = function(){
     
 };
+
+/*
+RootNode.prototype.AddChild = function(){
+    
+};*/
 
 
 /**
@@ -66,11 +84,10 @@ RootNode.prototype.Render = function(){
  * which scene nodes are visible components of dynamic actors in your game.
  * 
  */
-var Scene = function(){
-    this.nodes = [];
-    this.rootNode = new RootNode();
+var Scene = function(Renderer){
+    this.rootNode   = new RootNode();
     this.cameraNode = null;
-    this.Renderer = null;
+    this.Renderer   = Renderer;
     this.sceneActorMap = {};//map["actorid"] = SceneNodeInstance
 };
 
@@ -108,10 +125,13 @@ Scene.prototype.RemoveChild = function(ActorID){
     //this.nodes.push(SceneNode);
 };
 
-Scene.prototype.Render = function(scene){
-    
-    for(var node in nodes){
-        
+Scene.prototype.Render = function(){
+    if(this.rootNode && this.cameraNode){
+        if(this.rootNode.PreRender(this)){
+            this.rootNode.Render(this);
+            this.rootNode.RenderChildren(this);
+            this.rootNode.PosRender(this);
+        }
     }
 };
 
