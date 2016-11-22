@@ -10,15 +10,12 @@ ActorFactory.prototype.GetNextActorId = function(){
 };
 
 ActorFactory.prototype.CreateActor = function(actorResource){
-    //load actor from xml
     var factory = this;
     var req = new Request();
     req.ReadFile(actorResource, function(rootNode){
-        //console.log("rootNode", rootNode);
-        
         var actorNode = rootNode.firstChild;
         if(actorNode.nodeName !== "Actor"){
-            console.log("No Actor node found in "+actorResource);
+            console.log("Actor node not found in "+actorResource);
             return;
         }
         
@@ -31,9 +28,18 @@ ActorFactory.prototype.CreateActor = function(actorResource){
         
         var children = actorNode.children;
         for(var i=0; i < children.length; i++){
-            var component = children[i];
-            factory.CreateComponent(component);
+            var componentXmlNode = children[i];
+            var actorComponent = factory.CreateComponent(componentXmlNode);
+            if(actorComponent){
+                actor.AddComponent(actorComponent);
+                actorComponent.SetOwner(actor);
+            }
+            else{
+                console.log("component is null "+componentXmlNode);
+            }
         }
+        
+        actor.PosInit();
     });
 };
 
@@ -41,8 +47,8 @@ ActorFactory.prototype.CreateComponent = function(xmlNode){
    //create component from xml
    console.log("CreateComponent node", xmlNode);
    //xmlNode.getAttribute("type");
-   
-   
+   var name = xmlNode.nodeName;
+   //new name;
    
    //g_evtMgr.FireEvent("ACTORCOMPONENT_CREATED", component.GetId());
 };
