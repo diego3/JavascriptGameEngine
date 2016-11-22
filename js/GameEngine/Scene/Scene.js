@@ -69,6 +69,11 @@ var Scene = function(){
     this.sceneActorMap = {};//map["actorid"] = SceneNodeInstance
 };
 
+Scene.prototype.RegisterDelegates = function(){
+    g_evtMgr.Register("NEW_RENDER_COMPONENT", MAKEDELEGATE(this, NewRenderComponentDelegate));
+    
+};
+
 Scene.prototype.SetCamera = function(cameraNode){
     this.cameraNode = cameraNode;
 };
@@ -105,9 +110,21 @@ Scene.prototype.Render = function(scene){
     }
 };
 
-
-
 Scene.prototype.OnUpdate = function(fDeltaTime){
     
     
+};
+
+/**
+ * The BaseRenderComponent send out and SceneNode that was
+ * created by a factory method calling GetSceneNode -> CreateSceneNode direction
+ * just right the actor has been created
+ * 
+ * Specific Render Component should extends BaseRenderComponent and implement
+ * CreateSceneNode
+ */
+var NewRenderComponentDelegate = function(actorId, sceneNode){
+    console.log("NewRenderComponentDelegate", actorId, sceneNode);
+    
+    this.AddChild(actorId, sceneNode);
 };
