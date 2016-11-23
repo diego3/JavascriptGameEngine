@@ -12,6 +12,7 @@ var BaseApplication = function(){
     this.LastUpdate = 0;
     this.LastError = "";
     
+    this.gameOptions = [];
 };
 
 BaseApplication.prototype.CreateGameAndView = function(){
@@ -53,6 +54,7 @@ BaseApplication.prototype.Initialize = function(){
 BaseApplication.prototype.RegisterDelegates = function(){
     g_evtMgr.Register(GameEvent.START_GAME, MAKEDELEGATE(this, StartGameDelegate));
     g_evtMgr.Register(GameEvent.PAUSE_GAME, MAKEDELEGATE(this, StopFrameDelegate));
+    g_evtMgr.Register(EditorEvent.ADVANCE_FRAME, MAKEDELEGATE(this, AdvanceOneFrameDelegate));
     
 };
 
@@ -88,6 +90,36 @@ BaseApplication.prototype.RenderFrame = function(fDeltaTime){
     
 };
 
+BaseApplication.prototype.GetHumanView = function(){
+    var gameViewList = this.GameLogic.gameViewList;
+    for(var i=0; i < gameViewList.length; i++){
+        if(gameViewList[i].GetType() === "Human_View"){
+            return gameViewList[i];
+        }
+    }
+    return null;
+};
+
+BaseApplication.prototype.GetNetworkView = function(){
+    var gameViewList = this.GameLogic.gameViewList;
+    for(var i=0; i < gameViewList.length; i++){
+        if(gameViewList[i].GetType() === "Network_View"){
+            return gameViewList[i];
+        }
+    }
+    return null;
+};
+
+BaseApplication.prototype.GetAIView = function(){
+    var gameViewList = this.GameLogic.gameViewList;
+    for(var i=0; i < gameViewList.length; i++){
+        if(gameViewList[i].GetType() === "AI_View"){
+            return gameViewList[i];
+        }
+    }
+    return null;
+};
+
 BaseApplication.prototype.GameLoop = function(){
     var t = new Date().getTime();
     var delta = t - g_GameApp.LastUpdate;
@@ -97,5 +129,13 @@ BaseApplication.prototype.GameLoop = function(){
     g_GameApp.RequestAnimId = window.requestAnimationFrame(g_GameApp.GameLoop);
 };
 
+var AdvanceOneFrameDelegate = function(){
+    g_GameApp.UpdateFrame(60/1000);
+    g_GameApp.RenderFrame(60/1000);
+};
 
 
+BaseApplication.prototype.LoadGame = function(){
+    this.GameLogic.LoadGame("levelName");
+    
+};

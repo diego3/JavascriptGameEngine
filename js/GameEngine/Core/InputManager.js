@@ -1,4 +1,4 @@
-/* global GameEvent, g_evtMgr */
+/* global GameEvent, g_evtMgr, EditorEvent */
 var KEY = {
     BACKSPACE: 8,
     TAB: 9,
@@ -44,19 +44,25 @@ var InputManager = {
         }, false);
         
         //todo mouse events 
+        //element.addEventListener("mousedown", this._onMouseDown, false);
+        //element.addEventListener("mouseup", this._onMouseUp, false);
+       // element.addEventListener("mouseout", this._onMouseOut, false);
+        //element.addEventListener("mousemove", this._onMouseMove, false);
+        
+        
         var canvas = document.getElementById("canvas");
         console.log(canvas);
         canvas.addEventListener("onblur", function(evt){
             console.log("Canvas focus out");
-            g_evtMgr.FireEvent(GameEvent.PAUSE_GAME);
+            g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
         }, false);
         
         document.getElementById("start").addEventListener("click", function(evt){
-            g_evtMgr.FireEvent(GameEvent.START_GAME);
+            g_evtMgr.FireEvent(EditorEvent.START_GAME);
         }, false);
         
         document.getElementById("stop").addEventListener("click", function(evt){
-            g_evtMgr.FireEvent(GameEvent.PAUSE_GAME);
+            g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
         }, false);
     },
     OnKey: function(ev, key, pressed) {

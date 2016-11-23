@@ -96,6 +96,14 @@ Scene.prototype.RegisterDelegates = function(){
     
 };
 
+Scene.prototype.GetRenderer = function(){
+    return this.Renderer;
+};
+
+Scene.prototype.SetRenderer = function(newRenderer){
+    this.Renderer = newRenderer;
+};
+
 Scene.prototype.SetCamera = function(cameraNode){
     this.cameraNode = cameraNode;
 };
