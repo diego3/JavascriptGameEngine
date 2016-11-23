@@ -17,12 +17,30 @@ var BaseGameLogic = function(){
     this.actorFactory = null;
     this.gameState   = GameState.Initializing;
     this.lastViewId  = 0;
+    this.processMgr = null;
+    this.proxy = false;
+    
 };
 
 BaseGameLogic.prototype.Init = function(){
     this.actorFactory = new ActorFactory();
+    
+    //this.processMgr = new ProcessManager();
+    
 };
 
+/**
+ * That means we are joining an game already running
+ * We are the remote player ?
+ */
+BaseGameLogic.prototype.SetProxy = function(){
+    this.proxy = true;
+    
+    //TODO create websocket
+    //https://www.html5rocks.com/en/tutorials/websockets/basics/
+    //var connection = new WebSocket('ws://localhost/game', ['soap', 'xmpp']);
+    
+};
 BaseGameLogic.prototype.OnActorMoveDelegate = function(actorId, vec2){
     //this method should listen for an event fired from InputManager
     
@@ -30,10 +48,25 @@ BaseGameLogic.prototype.OnActorMoveDelegate = function(actorId, vec2){
 
 
 //load game
-BaseGameLogic.prototype.LoadGame = function(levelName){
-    
-    //for each view we should call LoadGame too
-    
+BaseGameLogic.prototype.LoadGame = function(levelName, callback){
+    var req = new Request();
+    req.ReadFile(levelName, function(rootNode){
+        
+        // load all initial actors
+        
+        
+        //for each view we should call LoadGame too
+        
+        // trigger the Environment Loaded Game event 
+        // - only then can player actors and AI be spawned!
+        if(this.proxy){
+            
+        }
+        
+        if(callback){
+            callback();
+        }
+    });
 };
 
 BaseGameLogic.prototype.AddView = function(view, actorId){
@@ -79,7 +112,14 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
         case GameState.MainMenu:
             break;
         case GameState.Running:
+            //this.processMgr.Update(fDeltaTime);
+            break;
+        case GameState.WaintingForPlayersToLoadEnvironment:
             
+            //this.ChangeState(GameState.SpawningPlayerActors);
+            break;
+        case GameState.SpawningPlayerActors:
+            this.ChangeState(GameState.Running);
             break;
         default:
             console.log("invalid game state: ", this.gameState);
@@ -98,6 +138,10 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
             else{
                 console.log("Game Failed to Load");
             }
+            break;
+        case GameState.WaintingForPlayersToLoadEnvironment:
+            
+            
             break;
     }
     

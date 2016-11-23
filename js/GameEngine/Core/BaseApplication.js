@@ -136,6 +136,6 @@ var AdvanceOneFrameDelegate = function(){
 
 
 BaseApplication.prototype.LoadGame = function(){
-    this.GameLogic.LoadGame("levelName");
+    this.GameLogic.LoadGame("../../Assets/level1_test");
     
 };
