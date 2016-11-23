@@ -10,6 +10,10 @@
     font-size:40px;
 }
 
-#topbar {
+#topbar, engine-title-row {
     margin-bottom: 12px;
+}
+
+#hierarchy-col{
+    
 }

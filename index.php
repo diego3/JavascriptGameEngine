@@ -27,30 +27,38 @@
     <![endif]-->
   </head>
   <body>
-      <div id="topbar" class="row">
-        <div class="col-md-2"></div>
+    <div id="engine-title-row" class="row">
+        <div class="col-md-1"></div>
         <div class="col-md-8">
             <span id="engine-title">Js GameEngine</span>
         </div>
-      </div>
-    
+    </div>
     
     <div id="topbar" class="row">
-        <div class="col-md-2"></div>
+        <div class="col-md-1"></div>
         <div class="col-md-8">
-            <a href="#" id="start" class="btn btn-default"><i class="glyphicon glyphicon-play"></i>START</a>
-            <a href="#" id="stop" class="btn btn-default"><i class="glyphicon glyphicon-stop"></i>STOP</a>
-            <a href="#" id="advanceframe" class="btn btn-default"><i class="glyphicon glyphicon-foward"></i>FRAME</a>
+            <a href="#" id="start" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+            <a href="#" id="stop" class="btn btn-default"><i class="glyphicon glyphicon-stop"></i></a>
+            <a href="#" id="advanceframe" class="btn btn-default"><i class="glyphicon glyphicon-step-forward"></i></a>
             
         </div>
     </div>
     
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
             <canvas id="canvas" width="800" height="600" class=""></canvas>
         </div>
-        
+        <div id="hierarchy-col">
+            <!--div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Hierarchy</h3>
+                </div>
+                <div class="panel-body">
+                   Scene graph tree
+                </div>
+            </div-->
+        </div>
     </div>
     
     <script src="js/GameEngine/3rdParty/toji-gl-matrix-2aa7274/dist/gl-matrix.js"></script>

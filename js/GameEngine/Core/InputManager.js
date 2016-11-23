@@ -1,4 +1,4 @@
-/* global GameEvent, g_evtMgr, EditorEvent */
+/* global GameEvent, g_evtMgr, EditorEvent, vec2 */
 var KEY = {
     BACKSPACE: 8,
     TAB: 9,
@@ -43,7 +43,6 @@ var InputManager = {
     },
     
     GetMousePosVec2:function(){
-        /*return a Vector2 ?*/
         var vpos = vec2.create();
         vec2.set(vpos, this.mouse.x, this.mouse.y);
         return vpos;
@@ -104,9 +103,10 @@ var InputManager = {
         InputManager.mouse.y = evt.y;
     },
     OnKey: function(ev, key, pressed) {
+        this.keys[key] = pressed;
         switch(key) {
             case KEY.LEFT: 
-                this.keys[KEY.LEFT] = pressed;
+                
                 //g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
                 ev.preventDefault(); 
             break;
