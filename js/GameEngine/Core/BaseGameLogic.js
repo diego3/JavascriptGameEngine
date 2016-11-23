@@ -20,12 +20,18 @@ var BaseGameLogic = function(){
     this.processMgr = null;
     this.proxy = false;
     
+    this.expectedPlayers = 0;
+    this.expectedRemotePlayers = 0;
+    this.expectedAI = 0;
+    this.humanPlayersAttached = 0;
+    this.AIPlayersAttached = 0;
+    this.humanGamesLoaded = 0;
 };
 
 BaseGameLogic.prototype.Init = function(){
     this.actorFactory = new ActorFactory();
     
-    //this.processMgr = new ProcessManager();
+    this.processMgr = new ProcessManager();
     
 };
 
@@ -103,6 +109,10 @@ BaseGameLogic.prototype.GetActor = function(actorId){
     return null;
 };
 
+BaseGameLogic.prototype.AttachProcess = function(process){
+    this.processMgr.Attach(process);
+    
+};
 
 BaseGameLogic.prototype.Update = function(fDeltaTime){
     switch(this.gameState){
@@ -110,9 +120,11 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
             this.ChangeState(GameState.MainMenu);
             break;
         case GameState.MainMenu:
+            
             break;
         case GameState.Running:
-            //this.processMgr.Update(fDeltaTime);
+            this.processMgr.Update(fDeltaTime);
+            
             break;
         case GameState.WaintingForPlayersToLoadEnvironment:
             
@@ -123,6 +135,14 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
             break;
         default:
             console.log("invalid game state: ", this.gameState);
+    }
+    
+    for(var i=0; i < this.gameViewList.length; i++){
+        this.gameViewList[i].Update(fDeltaTime);
+    }
+    
+    for(var actorIDKey in this.actorsMap){
+        this.actorsMap[actorIDKey].Update(fDeltaTime);
     }
 };
 

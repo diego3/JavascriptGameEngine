@@ -13,8 +13,25 @@ define(function(require){
     //http://robdodson.me/javascript-design-patterns-factory/
     var factoryClassName = "ActorFactory";
     var factoryInstance = Object.create(ActorFactory);
-    console.log(factoryInstance);
-           
+    
+    
+    //map interator
+    var map = {};
+    var p1 = new ActorFactory();
+    var p2 = new ActorFactory();
+    var p3 = new ActorFactory();
+    var p4 = new ActorFactory();
+    var p5 = new ActorFactory();
+    map["p1"] = p1;
+    map["p2"] = p2;
+    map["p3"] = p3;
+    map["p4"] = p4;
+    map["p5"] = p5;
+    
+    for(var actorKey in map){
+        map[actorKey].GetNextActorId();
+    }
+    
     document.getElementById("load").addEventListener("click",function(evt){
         console.log("button LOAD work");
         

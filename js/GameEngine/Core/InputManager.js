@@ -1,4 +1,4 @@
-/* global GameEvent, g_evtMgr, EditorEvent */
+/* global GameEvent, g_evtMgr, EditorEvent, vec2 */
 var KEY = {
     BACKSPACE: 8,
     TAB: 9,
@@ -32,30 +32,60 @@ var KEY = {
 
 var InputManager = {
     
-    lastPressedKey: null,
+    keys: [],
+    mouse:{
+        x:0,
+        y:0
+    },
     
+    IsKeyPressed:function(key){
+        return this.keys[key];  
+    },
+    
+    GetMousePosVec2:function(){
+        var vpos = vec2.create();
+        vec2.set(vpos, this.mouse.x, this.mouse.y);
+        return vpos;
+    },
+    
+    MouseIntersectVec2:function(/*Rectangle*/ point2D){
+        if(this.mouse.x >= point2D.x &&
+           this.mouse.x <= point2D.x + point2D.width && //point2D.x + point2D.width = right     
+           this.mouse.y <= point2D.y &&
+           this.mouse.y >= point2D.y + point2D.height){
+            return true;
+        }
+        return false;
+    },
+    MouseIntersect:function(x, y){
+        
+    },
     Init: function(){
+        var canvas = document.getElementById("canvas");
         document.addEventListener('keydown', function(ev) { 
-            return InputManager.OnKey(ev, ev.keyCode, true);  
+            InputManager.OnKey(ev, ev.keyCode, true);  
         }, false);
 
         document.addEventListener('keyup', function(ev) { 
-            return InputManager.OnKey(ev, ev.keyCode, false); 
+            InputManager.OnKey(ev, ev.keyCode, false); 
         }, false);
         
+        
         //todo mouse events 
-        //element.addEventListener("mousedown", this._onMouseDown, false);
-        //element.addEventListener("mouseup", this._onMouseUp, false);
-       // element.addEventListener("mouseout", this._onMouseOut, false);
-        //element.addEventListener("mousemove", this._onMouseMove, false);
+        //element.addEventListener("mousedown", this.OnMouseDown, false);
+        //element.addEventListener("mouseup", this.OnMouseUp, false);
+       // element.addEventListener("mouseout", this.OnMouseOut, false);
+        canvas.addEventListener("mousemove", this.OnMouseMove, false);
+        canvas.addEventListener("click", function(evt){
+            console.log("click target", evt);
+        }, false);
         
         
-        var canvas = document.getElementById("canvas");
-        console.log(canvas);
+        /*var canvas = document.getElementById("canvas");
         canvas.addEventListener("onblur", function(evt){
             console.log("Canvas focus out");
             g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
-        }, false);
+        }, false);*/
         
         document.getElementById("start").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.START_GAME);
@@ -64,25 +94,34 @@ var InputManager = {
         document.getElementById("stop").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
         }, false);
+        document.getElementById("advanceframe").addEventListener("click", function(evt){
+            g_evtMgr.FireEvent(EditorEvent.ADVANCE_FRAME);
+        }, false);
+    },
+    OnMouseMove:function(evt){
+        InputManager.mouse.x = evt.x;
+        InputManager.mouse.y = evt.y;
     },
     OnKey: function(ev, key, pressed) {
+        this.keys[key] = pressed;
         switch(key) {
             case KEY.LEFT: 
-                this.lastPressedKey = pressed ? KEY.LEFT : null;
-                g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
+                
+                //g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
                 ev.preventDefault(); 
             break;
             case KEY.RIGHT:
-                this.lastPressedKey = pressed ? KEY.RIGHT : null;
-                g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, 1);
+                //this.lastPressedKey = pressed ? KEY.RIGHT : null;
+                //g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, 1);
                 ev.preventDefault(); 
                 break;
             case KEY.SPACE: 
-                this.lastPressedKey = pressed ? KEY.SPACE : null;
+                //this.lastPressedKey = pressed ? KEY.SPACE : null;
                 
                 ev.preventDefault(); 
             break;
         }
+        console.log(this.keys);
     }
 
 };

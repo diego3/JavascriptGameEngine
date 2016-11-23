@@ -27,18 +27,37 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Js GameEngine</h1>
+    <div id="engine-title-row" class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+            <span id="engine-title">Js GameEngine</span>
+        </div>
+    </div>
     
-    <canvas id="canvas" width="800" height="600" class="center-block"></canvas>
+    <div id="topbar" class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-8">
+            <a href="#" id="start" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
+            <a href="#" id="stop" class="btn btn-default"><i class="glyphicon glyphicon-stop"></i></a>
+            <a href="#" id="advanceframe" class="btn btn-default"><i class="glyphicon glyphicon-step-forward"></i></a>
+            
+        </div>
+    </div>
     
     <div class="row">
-        <div class="col-md-8">
-            <p>
-                <a href="#" id="start" class="btn btn-success">START</a>
-            </p>
-            <p>
-                <a href="#" id="stop" class="btn btn-danger">STOP</a>
-            </p>
+        <div class="col-md-1"></div>
+        <div class="col-md-6">
+            <canvas id="canvas" width="800" height="600" class=""></canvas>
+        </div>
+        <div id="hierarchy-col">
+            <!--div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Hierarchy</h3>
+                </div>
+                <div class="panel-body">
+                   Scene graph tree
+                </div>
+            </div-->
         </div>
     </div>
     
