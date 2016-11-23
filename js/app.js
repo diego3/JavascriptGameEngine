@@ -9,6 +9,7 @@ var g_evtMgr = null;
 define(function(require){ 
     require("./GameEngine/Core/Heranca1");
     require("./GameEngine/Core/EventManager");
+    require("./GameEngine/MainLoop/ProcessManager");
     require("./GameEngine/Core/InputManager");
     require("./GameEngine/Utils/Color");
     require("./GameEngine/Utils/MathUtils");
@@ -16,7 +17,6 @@ define(function(require){
     require("./GameEngine/Utils/XMLHttpRequest");
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
-    require("./GameEngine/Actor/BallActors");//just for testings
     require("./GameEngine/Scene/Scene");
     require("./GameEngine/UserInterface/HumanView");
     require("./GameEngine/Core/BaseGameLogic");

@@ -32,30 +32,37 @@ var KEY = {
 
 var InputManager = {
     
-    lastPressedKey: null,
+    keys: [],
+    mouse:[],
+    
+    IsKeyPressed:function(key){
+        return this.keys[key];  
+    },
     
     Init: function(){
         document.addEventListener('keydown', function(ev) { 
-            return InputManager.OnKey(ev, ev.keyCode, true);  
+            InputManager.OnKey(ev, ev.keyCode, true);  
         }, false);
 
         document.addEventListener('keyup', function(ev) { 
-            return InputManager.OnKey(ev, ev.keyCode, false); 
+            InputManager.OnKey(ev, ev.keyCode, false); 
         }, false);
         
         //todo mouse events 
-        //element.addEventListener("mousedown", this._onMouseDown, false);
-        //element.addEventListener("mouseup", this._onMouseUp, false);
-       // element.addEventListener("mouseout", this._onMouseOut, false);
-        //element.addEventListener("mousemove", this._onMouseMove, false);
+        //element.addEventListener("mousedown", this.OnMouseDown, false);
+        //element.addEventListener("mouseup", this.OnMouseUp, false);
+       // element.addEventListener("mouseout", this.OnMouseOut, false);
+        document.addEventListener("mousemove", this.OnMouseMove, false);
+        document.addEventListener("click", function(evt){
+            console.log("click target", evt);
+        }, false);
         
         
-        var canvas = document.getElementById("canvas");
-        console.log(canvas);
+        /*var canvas = document.getElementById("canvas");
         canvas.addEventListener("onblur", function(evt){
             console.log("Canvas focus out");
             g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
-        }, false);
+        }, false);*/
         
         document.getElementById("start").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.START_GAME);
@@ -65,20 +72,23 @@ var InputManager = {
             g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
         }, false);
     },
+    OnMouseMove:function(evt){
+        
+    },
     OnKey: function(ev, key, pressed) {
         switch(key) {
             case KEY.LEFT: 
-                this.lastPressedKey = pressed ? KEY.LEFT : null;
-                g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
+                this.keys[KEY.LEFT] = pressed;
+                //g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
                 ev.preventDefault(); 
             break;
             case KEY.RIGHT:
-                this.lastPressedKey = pressed ? KEY.RIGHT : null;
-                g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, 1);
+                //this.lastPressedKey = pressed ? KEY.RIGHT : null;
+                //g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, 1);
                 ev.preventDefault(); 
                 break;
             case KEY.SPACE: 
-                this.lastPressedKey = pressed ? KEY.SPACE : null;
+                //this.lastPressedKey = pressed ? KEY.SPACE : null;
                 
                 ev.preventDefault(); 
             break;

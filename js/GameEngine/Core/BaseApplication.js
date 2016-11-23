@@ -1,6 +1,6 @@
 
 
-/* global g_GameApp, InputManager, GameEvent, EditorEvent */
+/* global g_GameApp, InputManager, GameEvent, EditorEvent, GameView */
 
 var BaseApplication = function(){
     this.IsRunning = false;
@@ -83,17 +83,27 @@ BaseApplication.prototype.UpdateFrame = function(fDeltaTime){
     /*for(var Actor in this.actors){
         Actor.Update(fDeltaTime);
     }*/
+    
+    //g_evtMgr.Update(20);
+    
+    //this.socketManager.Update();
+    
+    this.GameLogic.Update(fDeltaTime);
 };
 
 BaseApplication.prototype.RenderFrame = function(fDeltaTime){
     console.log("RenderFrame", fDeltaTime);
     
+    var viewList = g_GameApp.GameLogic.gameViewList;
+    for(var i=0; i < viewList.length; i++){
+        viewList[i].OnRender(fDeltaTime);
+    }
 };
 
 BaseApplication.prototype.GetHumanView = function(){
     var gameViewList = this.GameLogic.gameViewList;
     for(var i=0; i < gameViewList.length; i++){
-        if(gameViewList[i].GetType() === "Human_View"){
+        if(gameViewList[i].GetType() === GameView.HUMAN_VIEW){
             return gameViewList[i];
         }
     }
@@ -103,7 +113,7 @@ BaseApplication.prototype.GetHumanView = function(){
 BaseApplication.prototype.GetNetworkView = function(){
     var gameViewList = this.GameLogic.gameViewList;
     for(var i=0; i < gameViewList.length; i++){
-        if(gameViewList[i].GetType() === "Network_View"){
+        if(gameViewList[i].GetType() === GameView.NETWORK_VIEW){
             return gameViewList[i];
         }
     }
@@ -113,7 +123,7 @@ BaseApplication.prototype.GetNetworkView = function(){
 BaseApplication.prototype.GetAIView = function(){
     var gameViewList = this.GameLogic.gameViewList;
     for(var i=0; i < gameViewList.length; i++){
-        if(gameViewList[i].GetType() === "AI_View"){
+        if(gameViewList[i].GetType() === GameView.AI_VIEW){
             return gameViewList[i];
         }
     }

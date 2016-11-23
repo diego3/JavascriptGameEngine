@@ -2,11 +2,12 @@
 //specific actor factory
 var ActorFactory = function(){
     this.actorMap = {};
-    this.lastActorId = 0;
+    this.lastActorId = 1;
 };
     
 ActorFactory.prototype.GetNextActorId = function(){
-    return ++this.lastActorId;
+    this.lastActorId++;
+    return this.lastActorId;
 };
 
 ActorFactory.prototype.CreateActor = function(actorResource){
