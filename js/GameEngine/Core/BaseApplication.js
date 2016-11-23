@@ -1,6 +1,6 @@
 
 
-/* global g_GameApp, InputManager, GameEvent */
+/* global g_GameApp, InputManager, GameEvent, EditorEvent */
 
 var BaseApplication = function(){
     this.IsRunning = false;
@@ -130,8 +130,8 @@ BaseApplication.prototype.GameLoop = function(){
 };
 
 var AdvanceOneFrameDelegate = function(){
-    g_GameApp.UpdateFrame(60/1000);
-    g_GameApp.RenderFrame(60/1000);
+    g_GameApp.UpdateFrame(1000/60);
+    g_GameApp.RenderFrame(1000/60);
 };
 
 
