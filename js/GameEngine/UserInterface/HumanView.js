@@ -17,7 +17,7 @@ var HumanView = function(Renderer){
         //this.scene = new Scene(Renderer);
         //this.scene = new ScreenElementScene(Renderer);
         
-        this.scene.AddChild(cameraNode);
+        //this.scene.AddChild(cameraNode);
         //this.Scene.SetCamera(cameraNode);
     }
 };

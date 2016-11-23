@@ -16,7 +16,6 @@ define(function(require){
     require("./GameEngine/Utils/XMLHttpRequest");
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
-    require("./GameEngine/Actor/BallActors");//just for testings
     require("./GameEngine/Scene/Scene");
     require("./GameEngine/UserInterface/HumanView");
     require("./GameEngine/Core/BaseGameLogic");
