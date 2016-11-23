@@ -95,7 +95,7 @@ var InputManager = {
         document.getElementById("stop").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
         }, false);
-        document.getElementById("advframe").addEventListener("click", function(evt){
+        document.getElementById("advanceframe").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.ADVANCE_FRAME);
         }, false);
     },

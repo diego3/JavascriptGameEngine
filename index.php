@@ -40,7 +40,8 @@
         <div class="col-md-8">
             <a href="#" id="start" class="btn btn-default"><i class="glyphicon glyphicon-play"></i>START</a>
             <a href="#" id="stop" class="btn btn-default"><i class="glyphicon glyphicon-stop"></i>STOP</a>
-            <a href="#" id="advframe" class="btn btn-default">FRAME</a>
+            <a href="#" id="advanceframe" class="btn btn-default"><i class="glyphicon glyphicon-foward"></i>FRAME</a>
+            
         </div>
     </div>
     
