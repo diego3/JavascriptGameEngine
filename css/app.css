@@ -2,5 +2,14 @@
 
 #canvas {
     box-shadow: 2px 2px 10px #000000;
-    border-radius: 5px;
+    border-radius: 3px;
+}
+
+#engine-title{
+    /*margin-left:152px;*/
+    font-size:40px;
+}
+
+#topbar {
+    margin-bottom: 12px;
 }

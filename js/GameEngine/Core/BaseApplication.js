@@ -52,14 +52,15 @@ BaseApplication.prototype.Initialize = function(){
 };
 
 BaseApplication.prototype.RegisterDelegates = function(){
-    g_evtMgr.Register(GameEvent.START_GAME, MAKEDELEGATE(this, StartGameDelegate));
-    g_evtMgr.Register(GameEvent.PAUSE_GAME, MAKEDELEGATE(this, StopFrameDelegate));
+    g_evtMgr.Register(EditorEvent.START_GAME, MAKEDELEGATE(this, StartGameDelegate));
+    g_evtMgr.Register(EditorEvent.PAUSE_GAME, MAKEDELEGATE(this, StopFrameDelegate));
     g_evtMgr.Register(EditorEvent.ADVANCE_FRAME, MAKEDELEGATE(this, AdvanceOneFrameDelegate));
     
 };
 
 //BaseApplication.prototype.
 var StartGameDelegate = function() {
+    console.log("start game delegated successfully");
     if(!this.RequestAnimId) {
         if(this.IsInitialized){
             this.GameLoop();

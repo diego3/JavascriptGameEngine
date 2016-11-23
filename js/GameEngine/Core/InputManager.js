@@ -33,13 +33,36 @@ var KEY = {
 var InputManager = {
     
     keys: [],
-    mouse:[],
+    mouse:{
+        x:0,
+        y:0
+    },
     
     IsKeyPressed:function(key){
         return this.keys[key];  
     },
     
+    GetMousePosVec2:function(){
+        /*return a Vector2 ?*/
+        var vpos = vec2.create();
+        vec2.set(vpos, this.mouse.x, this.mouse.y);
+        return vpos;
+    },
+    
+    MouseIntersectVec2:function(/*Rectangle*/ point2D){
+        if(this.mouse.x >= point2D.x &&
+           this.mouse.x <= point2D.x + point2D.width && //point2D.x + point2D.width = right     
+           this.mouse.y <= point2D.y &&
+           this.mouse.y >= point2D.y + point2D.height){
+            return true;
+        }
+        return false;
+    },
+    MouseIntersect:function(x, y){
+        
+    },
     Init: function(){
+        var canvas = document.getElementById("canvas");
         document.addEventListener('keydown', function(ev) { 
             InputManager.OnKey(ev, ev.keyCode, true);  
         }, false);
@@ -48,12 +71,13 @@ var InputManager = {
             InputManager.OnKey(ev, ev.keyCode, false); 
         }, false);
         
+        
         //todo mouse events 
         //element.addEventListener("mousedown", this.OnMouseDown, false);
         //element.addEventListener("mouseup", this.OnMouseUp, false);
        // element.addEventListener("mouseout", this.OnMouseOut, false);
-        document.addEventListener("mousemove", this.OnMouseMove, false);
-        document.addEventListener("click", function(evt){
+        canvas.addEventListener("mousemove", this.OnMouseMove, false);
+        canvas.addEventListener("click", function(evt){
             console.log("click target", evt);
         }, false);
         
@@ -71,9 +95,13 @@ var InputManager = {
         document.getElementById("stop").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
         }, false);
+        document.getElementById("advframe").addEventListener("click", function(evt){
+            g_evtMgr.FireEvent(EditorEvent.ADVANCE_FRAME);
+        }, false);
     },
     OnMouseMove:function(evt){
-        
+        InputManager.mouse.x = evt.x;
+        InputManager.mouse.y = evt.y;
     },
     OnKey: function(ev, key, pressed) {
         switch(key) {
@@ -93,6 +121,7 @@ var InputManager = {
                 ev.preventDefault(); 
             break;
         }
+        console.log(this.keys);
     }
 
 };

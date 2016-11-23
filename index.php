@@ -27,19 +27,29 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Js GameEngine</h1>
+      <div id="topbar" class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <span id="engine-title">Js GameEngine</span>
+        </div>
+      </div>
     
-    <canvas id="canvas" width="800" height="600" class="center-block"></canvas>
+    
+    <div id="topbar" class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <a href="#" id="start" class="btn btn-default"><i class="glyphicon glyphicon-play"></i>START</a>
+            <a href="#" id="stop" class="btn btn-default"><i class="glyphicon glyphicon-stop"></i>STOP</a>
+            <a href="#" id="advframe" class="btn btn-default">FRAME</a>
+        </div>
+    </div>
     
     <div class="row">
+        <div class="col-md-2"></div>
         <div class="col-md-8">
-            <p>
-                <a href="#" id="start" class="btn btn-success">START</a>
-            </p>
-            <p>
-                <a href="#" id="stop" class="btn btn-danger">STOP</a>
-            </p>
+            <canvas id="canvas" width="800" height="600" class=""></canvas>
         </div>
+        
     </div>
     
     <script src="js/GameEngine/3rdParty/toji-gl-matrix-2aa7274/dist/gl-matrix.js"></script>
