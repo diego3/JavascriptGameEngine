@@ -12,6 +12,7 @@ String.prototype.hashCode = function () {
     return hash;
 };
 
+//http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
 function UUID() {
     var d = new Date().getTime();
     if(window.performance && typeof window.performance.now === "function"){

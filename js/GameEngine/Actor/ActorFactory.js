@@ -15,8 +15,9 @@ ActorFactory.prototype.RegisterComponentFactory = function () {
 };
 
 ActorFactory.prototype.GetNextActorId = function () {
-    this.lastActorId++;
-    return this.lastActorId;
+//    this.lastActorId++;
+//    return this.lastActorId;
+    return UUID();
 };
 
 ActorFactory.prototype.CreateActor = function (actorResource) {
