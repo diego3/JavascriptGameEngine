@@ -21,7 +21,7 @@ ActorFactory.prototype.GetNextActorId = function () {
 
 ActorFactory.prototype.CreateActor = function (actorResource) {
     var factory = this;
-    var req = new Request();
+    var req = new FileSystem();
     
     var rootNode = req.ReadXMLFile(actorResource);
     console.log(rootNode);

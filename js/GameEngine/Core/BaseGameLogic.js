@@ -54,24 +54,20 @@ BaseGameLogic.prototype.OnActorMoveDelegate = function(actorId, vec2){
 };
 
 BaseGameLogic.prototype.LoadGame = function(levelName, callback){
-    var req = new Request();
-    req.ReadFile(levelName, function(rootNode){
+    var req = new FileSystem();
+    var rootNode = req.ReadXMLFile(levelName);
         
-        // load all initial actors
-        
-        
-        //for each view we should call LoadGame too
-        
-        // trigger the Environment Loaded Game event 
-        // - only then can player actors and AI be spawned!
-        if(this.proxy){
-            
-        }
-        
-        if(callback){
-            callback();
-        }
-    });
+    // load all initial actors
+
+
+    //for each view we should call LoadGame too
+
+    // trigger the Environment Loaded Game event 
+    // - only then can player actors and AI be spawned!
+    if(this.proxy){
+
+    }
+    
 };
 
 BaseGameLogic.prototype.AddView = function(view, actorId){

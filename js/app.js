@@ -15,7 +15,7 @@ define(function(require){
     require("./GameEngine/Utils/Color");
     require("./GameEngine/Utils/MathUtils");
     require("./GameEngine/Utils/Random");
-    require("./GameEngine/Utils/XMLHttpRequest");
+    require("./GameEngine/Utils/FileSystem");
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
     require("./GameEngine/Scene/Scene");

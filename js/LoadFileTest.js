@@ -5,7 +5,7 @@ define(function(require){
     require("./GameEngine/Core/EventManager");
     require("./GameEngine/Core/InputManager");
     require("./GameEngine/Utils/Random");
-    require("./GameEngine/Utils/XMLHttpRequest");
+    require("./GameEngine/Utils/FileSystem");
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
     
