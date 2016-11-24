@@ -156,8 +156,10 @@ Scene.prototype.OnUpdate = function(fDeltaTime){
  * Specific Render Component should extends BaseRenderComponent and implement
  * CreateSceneNode
  */
-var NewRenderComponentDelegate = function(actorId, sceneNode){
-    console.log("NewRenderComponentDelegate", actorId, sceneNode);
+var NewRenderComponentDelegate = function(eventArgs){
+    console.log("NewRenderComponentDelegate", eventArgs);
     
+    var actorId = eventArgs[0];
+    var sceneNode = eventArgs[1];
     this.AddChild(actorId, sceneNode);
 };

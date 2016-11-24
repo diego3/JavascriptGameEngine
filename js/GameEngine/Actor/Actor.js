@@ -35,7 +35,9 @@ var BaseRenderComponent = function(){
     this.color = null;
 };
 BaseRenderComponent.Extends(ActorComponent);
-BaseRenderComponent.prototype.VOnRender = function(){};
+BaseRenderComponent.prototype.VOnRender = function(){
+    
+};
 BaseRenderComponent.NAME = "BaseRenderComponent";
 BaseRenderComponent.prototype.GetName = function() { return BaseRenderComponent.NAME;};
 BaseRenderComponent.prototype.CreateSceneNode = function(){//factory method
@@ -70,15 +72,13 @@ BaseRenderComponent.prototype.PosInit = function(){
 
 
 var Actor = function(id){
-    this.m_id = id;
+    this.m_id = id || null;
     this.components = [];// {name:"", instance:}
 };
 
 Actor.prototype.Update = function(fDeltaTime){
-    if(this.components.length >0){
-        for(var comp in components){
-            comp.Update(fDeltaTime);
-        }
+    for(var key in this.components){
+        this.components[key].Update(fDeltaTime);
     }
 };
 
@@ -87,10 +87,8 @@ Actor.prototype.Init = function(xmlNode){
 };
 
 Actor.prototype.PosInit = function(){
-    if(this.components.length >0){
-        for(var comp in components){
-            comp.PosInit();
-        }
+    for(var key in this.components){
+        this.components[key].PosInit();
     }
 };
 

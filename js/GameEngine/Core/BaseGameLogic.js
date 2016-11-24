@@ -20,7 +20,9 @@ var BaseGameLogic = function(){
     this.gameState   = GameState.Initializing;
     this.lastViewId  = 0;
     this.processMgr = null;
+    
     this.proxy = false;
+    this.remotePlayerId = 0;
     
     this.expectedPlayers = 0;
     this.expectedRemotePlayers = 0;
@@ -36,6 +38,8 @@ BaseGameLogic.prototype.Init = function(){
     
     this.processMgr = new ProcessManager();
     
+    g_evtMgr.Register(GameEvent.REQUEST_DESTROY_ACTOR, MAKEDELEGATE(this, RequestNewDestroyActorDelegate));
+    
 };
 
 /**
@@ -48,9 +52,36 @@ BaseGameLogic.prototype.SetProxy = function(){
     //TODO create websocket
     //https://www.html5rocks.com/en/tutorials/websockets/basics/
     //var connection = new WebSocket('ws://localhost/game');
+    g_evtMgr.Register(GameEvent.REQUEST_NEW_ACTOR, MAKEDELEGATE(this, RequestNewActorDelegate));
+    
+    
+    //this.physics = null;
+};
+
+var RequestNewActorDelegate = function(eventArgs){
+    // This should only happen if the game logic is a proxy, 
+    // and there's a server asking us to create an actor.
+    if(!this.proxy){
+        return;
+    }
+    
+    //ok we are a remote player, let's do it
+    
+    var actorResource = eventArgs[0];
+    var actorId = eventArgs[1];
+    
+    var actor = this.CreateActor(actorResource);
+    if(actor){
+        
+        g_evtMgr.FireEvent(GameEvent.NEW_ACTOR, actor.GetId());
+    }
+};
+
+var RequestDestroyActorDelegate = function(eventArgs){
     
 };
-BaseGameLogic.prototype.OnActorMoveDelegate = function(actorId, vec2){
+
+BaseGameLogic.prototype.OnActorMoveDelegate = function(eventArgs){
     //this method should listen for an event fired from InputManager
     
 };
@@ -87,17 +118,25 @@ BaseGameLogic.prototype.RemoveView = function(view){
     return false;    
 };
 
-BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*optional*/, initialTransform/*optional*/, serverActorId/*optional*/){
+BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*optional*/, initialTransform/*optional*/, serversActorId/*optional*/){
     var overrides = overridesXML || null;
     var transform = initialTransform || null;
-    var serverId  = serverActorId || null;
+    var serverId  = serversActorId || null;
+    
+    if (!this.proxy && serverId !== null){
+        return new Actor(serverId);
+    }
+    if (this.proxy && serverId === null){
+        return new Actor();
+    }
+    
     
     //create the actor provided and fire an event
     var actor = this.actorFactory.CreateActor(actorResource);
     if(actor){
         this.actorsMap[actor.GetId()] = actor;
         if(!this.proxy && (this.gameState === GameState.SpawningPlayerActors || this.gameState === GameState.Running)){
-            g_evtMgr.FireEvent(GameEvent.ACTOR_CREATED, actor.GetId());
+            g_evtMgr.FireEvent(GameEvent.REQUEST_NEW_ACTOR, actorResource, actor.GetId());
         }
     }
     else{
@@ -122,7 +161,8 @@ BaseGameLogic.prototype.AttachProcess = function(process){
 BaseGameLogic.prototype.Update = function(fDeltaTime){
     switch(this.gameState){
         case GameState.Initializing:
-            this.ChangeState(GameState.MainMenu);
+            //this.ChangeState(GameState.MainMenu);
+            this.ChangeState(GameState.Running);//we dont have a menu view yet
             break;
         case GameState.MainMenu:
             

@@ -52,7 +52,10 @@ EventManager.prototype.Update = function(fDeltaTime, frequency){
 var GameEvent = {
     LEVEL_LOADING: "LEVEL_LOADING",
     
-    ACTOR_CREATED: "ACTOR_CREATED",
+    REQUEST_NEW_ACTOR: "REQUEST_NEW_ACTOR",
+    REQUEST_DESTROY_ACTOR:"REQUEST_DESTROY_ACTOR",
+    NEW_ACTOR:"NEW_ACTOR",
+    
     ACTOR_MOVE: "ACTOR_MOVE",
     ACTOR_JUMP: "ACTOR_JUMP",
     ACTOR_FIRE: "ACTOR_FIRE",
