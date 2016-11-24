@@ -1,4 +1,6 @@
 
+/* global GameEvent, g_evtMgr */
+
 var GameState = {
     Invalid: -1,
     Initializing : 0,
@@ -92,7 +94,17 @@ BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*opti
     
     //create the actor provided and fire an event
     var actor = this.actorFactory.CreateActor(actorResource);
-    
+    if(actor){
+        this.actorsMap[actor.GetId()] = actor;
+        if(!this.proxy && (this.gameState === GameState.SpawningPlayerActors || this.gameState === GameState.Running)){
+            g_evtMgr.FireEvent(GameEvent.ACTOR_CREATED, actor.GetId());
+        }
+    }
+    else{
+        console.log("GameLogic.CreateActor failed: "+actorResource);
+        return null;
+    }
+    return actor;
 };
 
 BaseGameLogic.prototype.GetActor = function(actorId){

@@ -4,6 +4,7 @@ define(function(require){
     require("./GameEngine/Core/Heranca1");
     require("./GameEngine/Core/EventManager");
     require("./GameEngine/Core/InputManager");
+    require("./GameEngine/Utils/String");    
     require("./GameEngine/Utils/Random");
     require("./GameEngine/Utils/FileSystem");
     require("./GameEngine/Actor/Actor");
