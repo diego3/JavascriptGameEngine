@@ -15,6 +15,9 @@ define(function(require){
     document.getElementById("load").addEventListener("click",function(evt){
         
         var ball = factory.CreateActor("../Assets/Actor/Ball");
-        console.log("ball", ball);
+        
+        console.log(ball.GetComponent("TransformComponent"));
+        console.log(ball.GetComponent("BaseRenderComponent"));
+        
     });
 });

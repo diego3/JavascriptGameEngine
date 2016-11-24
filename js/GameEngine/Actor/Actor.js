@@ -30,6 +30,7 @@ TransformComponent.prototype.Init = function(xmlData){
 
 var BaseRenderComponent = function(){
     this.m_sceneNode = null;
+    this.color = null;
 };
 BaseRenderComponent.Extends(ActorComponent);
 BaseRenderComponent.prototype.VOnRender = function(){};
@@ -42,8 +43,18 @@ BaseRenderComponent.prototype.GetSceneNode=function(){
     return this.m_sceneNode;
 };
 BaseRenderComponent.prototype.Init = function(xmlData){
+    var colorElement = xmlData.getElementsByTagName("Color")[0];
+    if(!colorElement){
+        console.log("Are you missing Color tag for render component?");        
+        return false;
+    }
     
-    
+    var color = {};
+    color.r = colorElement.getAttribute("r");
+    color.g = colorElement.getAttribute("g");
+    color.b = colorElement.getAttribute("b");
+    color.a = colorElement.getAttribute("a");
+    this.color = color;
     return true;
 };
 BaseRenderComponent.prototype.PosInit = function(){

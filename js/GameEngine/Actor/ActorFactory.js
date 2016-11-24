@@ -24,7 +24,6 @@ ActorFactory.prototype.CreateActor = function (actorResource) {
     var req = new FileSystem();
     
     var rootNode = req.ReadXMLFile(actorResource);
-    console.log(rootNode);
     var actorNode = rootNode.firstChild;
     if (actorNode.nodeName !== "Actor") {
         console.log("Actor node not found in " + actorResource);
