@@ -44,7 +44,7 @@ BaseGameLogic.prototype.SetProxy = function(){
     
     //TODO create websocket
     //https://www.html5rocks.com/en/tutorials/websockets/basics/
-    //var connection = new WebSocket('ws://localhost/game', ['soap', 'xmpp']);
+    //var connection = new WebSocket('ws://localhost/game');
     
 };
 BaseGameLogic.prototype.OnActorMoveDelegate = function(actorId, vec2){
@@ -125,15 +125,18 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
         case GameState.WaintingForPlayers:
             
             
-            
+            if(g_GameApp.gameOptions.level != ""){
+                this.ChangeState(GameState.LoadingGameEnvironment);
+            }
             break;
         case GameState.Running:
             this.processMgr.Update(fDeltaTime);
             
             break;
         case GameState.WaintingForPlayersToLoadEnvironment:
-            
-            //this.ChangeState(GameState.SpawningPlayerActors);
+            if(this.expectedPlayers + this.expectedRemotePlayers <= this.humanGamesLoaded){
+                this.ChangeState(GameState.SpawningPlayerActors);
+            }
             break;
         case GameState.SpawningPlayerActors:
             this.ChangeState(GameState.Running);

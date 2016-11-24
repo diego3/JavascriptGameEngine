@@ -44,6 +44,7 @@ EventManager.prototype.Queue = function(event){
 
 var GameEvent = {
     LEVEL_LOADING: "LEVEL_LOADING",
+    
     ACTOR_MOVE: "ACTOR_MOVE",
     ACTOR_JUMP: "ACTOR_JUMP",
     ACTOR_FIRE: "ACTOR_FIRE",
@@ -54,7 +55,7 @@ var GameEvent = {
 };
 
 var EditorEvent = {
-    START_GAME: "START_GAME",
-    PAUSE_GAME: "PAUSE_GAME",
+    START_ENGINE: "START_ENGINE",
+    PAUSE_FRAME: "PAUSE_FRAME",
     ADVANCE_FRAME: "ADVANCE_FRAME"
 };

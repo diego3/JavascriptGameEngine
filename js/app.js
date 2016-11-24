@@ -9,6 +9,7 @@ var g_evtMgr = null;
 define(function(require){ 
     require("./GameEngine/Core/Heranca1");
     require("./GameEngine/Core/EventManager");
+    require("./GameEngine/MainLoop/GameOptions");
     require("./GameEngine/MainLoop/ProcessManager");
     require("./GameEngine/Core/InputManager");
     require("./GameEngine/Utils/Color");

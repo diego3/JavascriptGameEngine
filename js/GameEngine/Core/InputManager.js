@@ -71,7 +71,6 @@ var InputManager = {
         }, false);
         
         
-        //todo mouse events 
         //element.addEventListener("mousedown", this.OnMouseDown, false);
         //element.addEventListener("mouseup", this.OnMouseUp, false);
        // element.addEventListener("mouseout", this.OnMouseOut, false);
@@ -80,19 +79,12 @@ var InputManager = {
             console.log("click target", evt);
         }, false);
         
-        
-        /*var canvas = document.getElementById("canvas");
-        canvas.addEventListener("onblur", function(evt){
-            console.log("Canvas focus out");
-            g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
-        }, false);*/
-        
         document.getElementById("start").addEventListener("click", function(evt){
-            g_evtMgr.FireEvent(EditorEvent.START_GAME);
+            g_evtMgr.FireEvent(EditorEvent.START_ENGINE);
         }, false);
         
         document.getElementById("stop").addEventListener("click", function(evt){
-            g_evtMgr.FireEvent(EditorEvent.PAUSE_GAME);
+            g_evtMgr.FireEvent(EditorEvent.PAUSE_FRAME);
         }, false);
         document.getElementById("advanceframe").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.ADVANCE_FRAME);

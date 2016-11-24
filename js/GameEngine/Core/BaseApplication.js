@@ -39,7 +39,9 @@ BaseApplication.prototype.Initialize = function(){
         return false;
     }
     
-    //create the EventManager over here
+    GameOptions.Init("Asset/options");
+    this.gameOptions = GameOptions;
+    
     this.EventManager = new EventManager();
     g_evtMgr = this.EventManager;
     
@@ -52,14 +54,14 @@ BaseApplication.prototype.Initialize = function(){
 };
 
 BaseApplication.prototype.RegisterDelegates = function(){
-    g_evtMgr.Register(EditorEvent.START_GAME, MAKEDELEGATE(this, StartGameDelegate));
-    g_evtMgr.Register(EditorEvent.PAUSE_GAME, MAKEDELEGATE(this, StopFrameDelegate));
+    g_evtMgr.Register(EditorEvent.START_ENGINE, MAKEDELEGATE(this, StartGameEngineDelegate));
+    g_evtMgr.Register(EditorEvent.PAUSE_FRAME, MAKEDELEGATE(this, StopFrameDelegate));
     g_evtMgr.Register(EditorEvent.ADVANCE_FRAME, MAKEDELEGATE(this, AdvanceOneFrameDelegate));
     
 };
 
 //BaseApplication.prototype.
-var StartGameDelegate = function() {
+var StartGameEngineDelegate = function() {
     console.log("start game delegated successfully");
     if(!this.RequestAnimId) {
         if(this.IsInitialized){
@@ -79,11 +81,13 @@ var StopFrameDelegate = function() {
     }  
 };
 
+var ccc=0;
 BaseApplication.prototype.UpdateFrame = function(fDeltaTime){
-    console.log("UpdateFrame", fDeltaTime);
-    /*for(var Actor in this.actors){
-        Actor.Update(fDeltaTime);
-    }*/
+    ccc += fDeltaTime;
+    if(ccc > 1000){
+        console.log("UpdateFrame", fDeltaTime);
+        ccc = 0;
+    }
     
     //g_evtMgr.Update(20);
     
@@ -93,7 +97,7 @@ BaseApplication.prototype.UpdateFrame = function(fDeltaTime){
 };
 
 BaseApplication.prototype.RenderFrame = function(fDeltaTime){
-    console.log("RenderFrame", fDeltaTime);
+    //console.log("RenderFrame", fDeltaTime);
     
     var viewList = g_GameApp.GameLogic.gameViewList;
     for(var i=0; i < viewList.length; i++){
