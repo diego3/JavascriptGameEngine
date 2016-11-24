@@ -77,7 +77,7 @@ var RequestNewActorDelegate = function(eventArgs){
     }
 };
 
-var RequestDestroyActorDelegate = function(eventArgs){
+var RequestNewDestroyActorDelegate = function(eventArgs){
     
 };
 
