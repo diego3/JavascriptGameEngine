@@ -19,7 +19,7 @@ ProcessManager.prototype.AttachProcess = function(process){
 ProcessManager.prototype.Update = function(fDeltaTime){
     
     //some loop for update each process attached
-    for(var i; i < this.processes.length; i++){
+    for(var i=0; i < this.processes.length; i++){
         this.processes[i].OnUpdate(fDeltaTime);
     }
     
