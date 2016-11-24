@@ -57,6 +57,12 @@ BaseApplication.prototype.RegisterDelegates = function(){
     g_evtMgr.Register(EditorEvent.START_ENGINE, MAKEDELEGATE(this, StartGameEngineDelegate));
     g_evtMgr.Register(EditorEvent.PAUSE_FRAME, MAKEDELEGATE(this, StopFrameDelegate));
     g_evtMgr.Register(EditorEvent.ADVANCE_FRAME, MAKEDELEGATE(this, AdvanceOneFrameDelegate));
+    g_evtMgr.Register(EditorEvent.ADD_ACTOR_TEST, MAKEDELEGATE(this, AddActorTestDelegate));
+    
+};
+
+var AddActorTestDelegate=function(){
+    var ball = this.GameLogic.CreateActor("Actor/Ball");
     
 };
 
@@ -89,7 +95,7 @@ BaseApplication.prototype.UpdateFrame = function(fDeltaTime){
         ccc = 0;
     }
     
-    //g_evtMgr.Update(20);
+    //g_evtMgr.Update(fDeltaTime, 20);
     
     //this.socketManager.Update();
     
@@ -147,6 +153,7 @@ BaseApplication.prototype.GameLoop = function(){
 var AdvanceOneFrameDelegate = function(){
     g_GameApp.UpdateFrame(1000/60);
     g_GameApp.RenderFrame(1000/60);
+    console.log("+ frame");
 };
 
 

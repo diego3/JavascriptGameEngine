@@ -4,17 +4,29 @@ var ActorComponent = function(){
 };
 ActorComponent.prototype.Update = function(fDeltaTime){};
 ActorComponent.prototype.GetName = function(){};
-ActorComponent.prototype.Init = function(xmlData){};
+ActorComponent.prototype.Init = function(xmlData){ return true;};
 ActorComponent.prototype.PosInit = function(){};
 ActorComponent.prototype.SetOwner = function(owner){ this.m_owner = owner;};
 ActorComponent.prototype.GetOwner = function(){return this.m_owner;};
 
-var TransformComponent = function(/*Vector2*/ v2pos){
-    this.position = v2pos;
+var TransformComponent = function(){
+    this.position = vec2.create();
 };
 TransformComponent.Extends(ActorComponent);
 TransformComponent.prototype.Update = function(fDeltaTime){};
 TransformComponent.prototype.GetName = function() { return "TransformComponent";};
+TransformComponent.prototype.Init = function(xmlData){
+    var posElement = xmlData.getElementsByTagName("Position")[0];
+    if(!posElement){
+        console.log("Are you missing Position tag for transform component?");        
+        return false;
+    }
+    var x = posElement.getAttribute("x") || 0;
+    var y = posElement.getAttribute("y") || 0;
+    
+    vec2.set(this.position, x, y);
+    return true;
+};
 
 var BaseRenderComponent = function(){
     this.m_sceneNode = null;
@@ -28,6 +40,11 @@ BaseRenderComponent.prototype.GetSceneNode=function(){
         this.m_sceneNode = this.CreateSceneNode();
     }
     return this.m_sceneNode;
+};
+BaseRenderComponent.prototype.Init = function(xmlData){
+    
+    
+    return true;
 };
 BaseRenderComponent.prototype.PosInit = function(){
     var sceneNode = this.GetSceneNode();
@@ -66,7 +83,7 @@ Actor.prototype.GetId = function(){
 };
 
 Actor.prototype.AddComponent = function(/*ActorComponent*/ component){
-    this.components[component.getName()] = component;
+    this.components[component.GetName()] = component;
 };
 
 Actor.prototype.GetComponent = function(componentName){

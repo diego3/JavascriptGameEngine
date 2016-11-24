@@ -1,57 +1,77 @@
 
 //specific actor factory
-var ActorFactory = function(){
+var ActorFactory = function () {
     this.actorMap = {};
     this.lastActorId = 1;
+    this.componentFactory = {};
 };
+
+ActorFactory.prototype.RegisterComponentFactory = function () {
+    this.componentFactory["TransformComponent"]  = TransformComponent;
+    this.componentFactory["BaseRenderComponent"] = BaseRenderComponent;
     
-ActorFactory.prototype.GetNextActorId = function(){
+    
+    //http://robdodson.me/javascript-design-patterns-factory/
+};
+
+ActorFactory.prototype.GetNextActorId = function () {
     this.lastActorId++;
     return this.lastActorId;
 };
 
-ActorFactory.prototype.CreateActor = function(actorResource){
+ActorFactory.prototype.CreateActor = function (actorResource) {
     var factory = this;
     var req = new Request();
-    req.ReadFile(actorResource, function(rootNode){
-        var actorNode = rootNode.firstChild;
-        if(actorNode.nodeName !== "Actor"){
-            console.log("Actor node not found in "+actorResource);
-            return;
+    
+    var rootNode = req.ReadXMLFile(actorResource);
+    console.log(rootNode);
+    var actorNode = rootNode.firstChild;
+    if (actorNode.nodeName !== "Actor") {
+        console.log("Actor node not found in " + actorResource);
+        return;
+    }
+
+    //create the Actor instance
+    var existingActorId = actorNode.getAttribute("id");
+    var actor = new Actor(existingActorId || factory.GetNextActorId());
+    factory.actorMap[actor.GetId()] = actor;
+
+    var children = actorNode.children;
+    for (var i = 0; i < children.length; i++) {
+        var componentXmlNode = children[i];
+        var actorComponent = factory.CreateComponent(componentXmlNode);
+        if (actorComponent) {
+            actor.AddComponent(actorComponent);
+            actorComponent.SetOwner(actor);
         }
-        
-        //create the Actor instance
-        var existingActorId = actorNode.getAttribute("id");
-        var actor = new Actor(existingActorId || factory.GetNextActorId());
-        factory.actorMap[actor.GetId()] = actor;
-        
-        //g_evtMgr.FireEvent("ACTOR_CREATED", actor.GetId());
-        
-        var children = actorNode.children;
-        for(var i=0; i < children.length; i++){
-            var componentXmlNode = children[i];
-            var actorComponent = factory.CreateComponent(componentXmlNode);
-            if(actorComponent){
-                actor.AddComponent(actorComponent);
-                actorComponent.SetOwner(actor);
-            }
-            else{
-                console.log("component is null "+componentXmlNode);
-            }
+        else {
+            console.log("component is null " + componentXmlNode);
         }
-        
-        actor.PosInit();
-    });
+    }
+    actor.PosInit();
+    return actor;
 };
 
-ActorFactory.prototype.CreateComponent = function(xmlNode){
-   //create component from xml
-   console.log("CreateComponent node", xmlNode);
-   //xmlNode.getAttribute("type");
-   var name = xmlNode.nodeName;
-   //new name;
-   
-   //g_evtMgr.FireEvent("ACTORCOMPONENT_CREATED", component.GetId());
+ActorFactory.prototype.CreateComponent = function (xmlNode) {
+    //console.log("CreateComponent node", xmlNode);
+    //xmlNode.getAttribute("type");
+    var name = xmlNode.nodeName;
+    
+    //console.log("this.componentFactory", this.componentFactory);
+    if (!this.componentFactory[name]) {
+        return null;
+    }
+
+    var component = new this.componentFactory[name]();
+    if (!component) {
+        console.log("componentFactory method failed: " + name);
+        return null;
+    }
+    if (!component.Init(xmlNode)) {
+        console.log("Failed to init component: " + name);
+        return null;
+    }
+    return component;
 };
 
 /**
@@ -59,14 +79,14 @@ ActorFactory.prototype.CreateComponent = function(xmlNode){
  * 
  * @returns {ActorFactory.actorMap}
  */
-ActorFactory.prototype.CreateBall = function(){ 
+ActorFactory.prototype.CreateBall = function () {
     //TODO  load all the actor from a json or xml
     var ball = new Ball(this.GetNextActorId());
-    
+
     var brender = new BallRendererComponent();
     ball.AddComponent(brender);
-    
+
     this.actorMap[ball.m_id] = ball;
-    
-    return this.actorMap;
+
+    return ball;
 };

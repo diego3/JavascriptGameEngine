@@ -89,6 +89,10 @@ var InputManager = {
         document.getElementById("advanceframe").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.ADVANCE_FRAME);
         }, false);
+        document.getElementById("addactor").addEventListener("click", function(evt){
+            g_evtMgr.FireEvent(EditorEvent.ADD_ACTOR_TEST);
+        }, false);
+        
     },
     OnMouseMove:function(evt){
         InputManager.mouse.x = evt.x;

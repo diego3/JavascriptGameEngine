@@ -1,0 +1,24 @@
+<Actor type="ball" id="1152">
+
+    <TransformComponent>
+        <Position x="" y="" />
+    </TransformComponent>
+    
+    <RenderComponent>
+        <Color r="" g="" b="" />
+        <Texture src="Assets/Art/" />
+        <Shader src="Assets/Shader/"/>
+    </RenderComponent>
+    
+    <AIComponent>
+        
+    </AIComponent>
+    
+    <NetworkComponent>
+        
+    </NetworkComponent>
+    
+    <SoundComponent>
+        
+    </SoundComponent>
+</Actor>

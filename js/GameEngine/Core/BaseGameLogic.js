@@ -30,6 +30,7 @@ var BaseGameLogic = function(){
 
 BaseGameLogic.prototype.Init = function(){
     this.actorFactory = new ActorFactory();
+    this.actorFactory.RegisterComponentFactory();
     
     this.processMgr = new ProcessManager();
     
@@ -52,8 +53,6 @@ BaseGameLogic.prototype.OnActorMoveDelegate = function(actorId, vec2){
     
 };
 
-
-//load game
 BaseGameLogic.prototype.LoadGame = function(levelName, callback){
     var req = new Request();
     req.ReadFile(levelName, function(rootNode){
@@ -90,15 +89,13 @@ BaseGameLogic.prototype.RemoveView = function(view){
     return false;    
 };
 
-//Create, Move and Destroy actors using the ActorFactory
-
-BaseGameLogic.prototype.CreateActor = function(actorId, overridesXML/*optional*/, initialTransform/*optional*/, serverActorId/*optional*/){
+BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*optional*/, initialTransform/*optional*/, serverActorId/*optional*/){
     var overrides = overridesXML || null;
     var transform = initialTransform || null;
     var serverId  = serverActorId || null;
     
     //create the actor provided and fire an event
-    
+    var actor = this.actorFactory.CreateActor(actorResource);
     
 };
 
@@ -124,6 +121,23 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
             break;
         case GameState.WaintingForPlayers:
             
+            //this.gameViewList pop menu view from the list 
+            
+            this.expectedPlayers = g_GameApp.gameOptions.expectedPlayers -1;
+            if(g_GameApp.gameOptions.gameHost != ""){
+                this.SetProxy();
+                this.expectedAI=0;
+                this.expectedRemotePlayers =0;
+                
+                //attempt attach as client, if fails then redirect to MainMenu game state
+                
+            }
+            else if(this.expectedPlayers > 0){
+                //so, we will need prepare the environment to support remote players
+                //we need to initialize the sockets
+                
+                
+            }
             
             if(g_GameApp.gameOptions.level != ""){
                 this.ChangeState(GameState.LoadingGameEnvironment);
@@ -164,7 +178,7 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
                 this.ChangeState(GameState.WaintingForPlayersToLoadEnvironment);
             }
             else{
-                console.log("Game Failed to Load");
+                console.log("g_GameApp.LoadGame Failed to Load");
             }
             break;
         case GameState.WaintingForPlayersToLoadEnvironment:

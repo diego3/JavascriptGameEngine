@@ -40,7 +40,7 @@
             <a href="#" id="start" class="btn btn-default"><i class="glyphicon glyphicon-play"></i></a>
             <a href="#" id="stop" class="btn btn-default"><i class="glyphicon glyphicon-stop"></i></a>
             <a href="#" id="advanceframe" class="btn btn-default"><i class="glyphicon glyphicon-step-forward"></i></a>
-            
+            <a href="#" id="addactor" class="btn btn-primary"><i class="glyphicon glyphicon-plus-sign"></i></a>
         </div>
     </div>
     
