@@ -18,9 +18,18 @@ var HumanView = function(Renderer){
     this.gameState = null;
     this.screenElementList = []; //list
     
+    this.lastDraw = 0;
+    this.currentTick = 0;
+    
+    this.console = null;
+    
+    this.needRevertSortScreenElements = true;
+    
     if(Renderer){
         this.ctx = Renderer;//canvas contex
         this.scene = new Scene(Renderer);//for a while, it should be removed
+        this.scene.RegisterDelegates();
+        
         //this.scene = new ScreenElementScene(Renderer);//this is the correct Scene class, but that is not implemented yet
         this.scene.AddChild(null/*cameraNode*/);
         //this.Scene.SetCamera(cameraNode);
@@ -57,6 +66,7 @@ HumanView.prototype.GetType = function(){
 
 HumanView.prototype.PushElement = function(screenElement){
     this.screenElementList.push(screenElement);
+    this.needRevertSortScreenElements = true;
 };
 
 HumanView.prototype.RemoveElement = function(screenElement){
@@ -66,6 +76,7 @@ HumanView.prototype.RemoveElement = function(screenElement){
         this.screenElementList.slice(index, 1);
     }
     //this.screenElementList.pop();
+    this.needRevertSortScreenElements = true;
 };
 
 HumanView.prototype.GetProcessManager = function(){
@@ -80,12 +91,39 @@ HumanView.prototype.Update = function(fDeltaTime){
     this.processMgr.Update(fDeltaTime);
     
     for(var i=0; i < this.screenElementList.length; i++){
-        this.screenElementList[i].Update(fDeltaTime);
+        this.screenElementList[i].OnUpdate(fDeltaTime);
     }
 };
 
-HumanView.prototype.OnRender = function(){
+HumanView.prototype.RenderText = function(fDeltaTime){
+    //var ctx = this.ctx;
     
     
+};
+
+HumanView.prototype.OnRender = function(fDeltaTime){
+    this.currentTick = new Date().getTime();
     
+    if(this.needRevertSortScreenElements){
+        this.screenElementList.sort();//.reverse();
+        this.needRevertSortScreenElements = false;
+    }
+    
+    //PreRender();
+    
+    for(var i=0; i < this.screenElementList.length; i++){
+        if(this.screenElementList[i].IsVisible()){
+            this.screenElementList[i].OnRender(fDeltaTime);
+        }
+    }
+    
+    this.scene.Render();
+    
+    this.RenderText(fDeltaTime);
+    
+    //this.console.Render(fDeltaTime);
+    
+    this.lastDraw = this.currentTick;
+    
+    //PosRender();
 };

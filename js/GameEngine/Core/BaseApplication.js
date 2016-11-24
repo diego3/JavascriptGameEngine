@@ -1,6 +1,6 @@
 
 
-/* global g_GameApp, InputManager, GameEvent, EditorEvent, GameView */
+/* global g_GameApp, InputManager, GameEvent, EditorEvent, GameView, GameOptions */
 
 var BaseApplication = function(){
     this.IsRunning = false;
@@ -33,6 +33,9 @@ BaseApplication.prototype.Initialize = function(){
     }
     this.Renderer = ctx;
     
+    this.EventManager = new EventManager();
+    g_evtMgr = this.EventManager;
+    
     this.GameLogic = this.CreateGameAndView(); 
     if(this.GameLogic === null){
         this.LastError = "GameLogic was not initialized";
@@ -41,9 +44,6 @@ BaseApplication.prototype.Initialize = function(){
     
     GameOptions.Init("Asset/options");
     this.gameOptions = GameOptions;
-    
-    this.EventManager = new EventManager();
-    g_evtMgr = this.EventManager;
     
     InputManager.Init();
     
@@ -62,8 +62,8 @@ BaseApplication.prototype.RegisterDelegates = function(){
 };
 
 var AddActorTestDelegate=function(){
-    var ball = this.GameLogic.CreateActor("Actor/Ball");
-    
+    var ball = this.GameLogic.CreateActor("../../../Assets/Actor/Ball");
+    console.log(ball);
 };
 
 //BaseApplication.prototype.

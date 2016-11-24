@@ -20,7 +20,9 @@ define(function(require){
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
     require("./GameEngine/Scene/Scene");
+    require("./GameEngine/UserInterface/IScreenElement");
     require("./GameEngine/UserInterface/HumanView");
+    require("./GameEngine/UserInterface/UI");
     require("./GameEngine/Core/BaseGameLogic");
     require("./GameEngine/Core/BaseApplication");
     
