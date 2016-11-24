@@ -122,6 +122,11 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
         case GameState.MainMenu:
             
             break;
+        case GameState.WaintingForPlayers:
+            
+            
+            
+            break;
         case GameState.Running:
             this.processMgr.Update(fDeltaTime);
             

@@ -1,0 +1,9 @@
+<Level name="test1">
+
+    <StaticActors>
+        
+        <Actor resource="Assets/Actor/Background"></Actor>
+        
+    </StaticActors>
+    
+</Level>
