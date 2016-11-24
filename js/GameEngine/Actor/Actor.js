@@ -3,7 +3,8 @@ var ActorComponent = function(){
     this.m_owner = null;//the actor who is parent from this component
 };
 ActorComponent.prototype.Update = function(fDeltaTime){};
-ActorComponent.prototype.GetName = function(){};
+ActorComponent.NAME = "INVALID_ACTOR_COMPONENT";
+ActorComponent.prototype.GetName = function(){ return ActorComponent.NAME;};
 ActorComponent.prototype.Init = function(xmlData){ return true;};
 ActorComponent.prototype.PosInit = function(){};
 ActorComponent.prototype.SetOwner = function(owner){ this.m_owner = owner;};
@@ -14,7 +15,8 @@ var TransformComponent = function(){
 };
 TransformComponent.Extends(ActorComponent);
 TransformComponent.prototype.Update = function(fDeltaTime){};
-TransformComponent.prototype.GetName = function() { return "TransformComponent";};
+TransformComponent.NAME = "TransformComponent";
+TransformComponent.prototype.GetName = function() { return TransformComponent.NAME;};
 TransformComponent.prototype.Init = function(xmlData){
     var posElement = xmlData.getElementsByTagName("Position")[0];
     if(!posElement){
@@ -34,8 +36,11 @@ var BaseRenderComponent = function(){
 };
 BaseRenderComponent.Extends(ActorComponent);
 BaseRenderComponent.prototype.VOnRender = function(){};
-BaseRenderComponent.prototype.GetName = function() { return "BaseRenderComponent";};
-BaseRenderComponent.prototype.CreateSceneNode = function(){};//factory method
+BaseRenderComponent.NAME = "BaseRenderComponent";
+BaseRenderComponent.prototype.GetName = function() { return BaseRenderComponent.NAME;};
+BaseRenderComponent.prototype.CreateSceneNode = function(){//factory method
+    return new SceneNode(this.GetOwner(), this);
+};
 BaseRenderComponent.prototype.GetSceneNode=function(){
     if(!this.m_sceneNode){
         this.m_sceneNode = this.CreateSceneNode();

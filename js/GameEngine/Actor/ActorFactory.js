@@ -7,8 +7,8 @@ var ActorFactory = function () {
 };
 
 ActorFactory.prototype.RegisterComponentFactory = function () {
-    this.componentFactory["TransformComponent"]  = TransformComponent;
-    this.componentFactory["BaseRenderComponent"] = BaseRenderComponent;
+    this.componentFactory[TransformComponent.NAME]  = TransformComponent;
+    this.componentFactory[BaseRenderComponent.NAME] = BaseRenderComponent;
     
     
     //http://robdodson.me/javascript-design-patterns-factory/

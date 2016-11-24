@@ -2,9 +2,9 @@
 
 /* global g_evtMgr */
 
-var SceneNode = function(parent, renderComponent){
+var SceneNode = function(parentNode, renderComponent){
     this.childs = [];
-    this.parentNode = parent || null;
+    this.parentNode = parentNode || null;
     this.renderComponent = renderComponent || null;
 };
 
