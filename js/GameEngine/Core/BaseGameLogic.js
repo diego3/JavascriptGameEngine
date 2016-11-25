@@ -1,5 +1,5 @@
 
-/* global GameEvent, g_evtMgr */
+/* global GameEvent, g_evtMgr, GameView, g_GameApp */
 
 var GameState = {
     Invalid: -1,
@@ -20,7 +20,10 @@ var BaseGameLogic = function(){
     this.gameState   = GameState.Initializing;
     this.lastViewId  = 0;
     this.processMgr = null;
-    
+    /**
+     * true  = remote player 
+     * false = local player
+     */
     this.proxy = false;
     this.remotePlayerId = 0;
     
@@ -30,7 +33,7 @@ var BaseGameLogic = function(){
     this.humanPlayersAttached = 0;
     this.remotePlayersAttached = 0;
     this.AIPlayersAttached = 0;
-    this.humanGamesLoaded = 0;
+    this.humanGamesLoaded = 0;//increment on listen by GameEvent.ENVIRONMENT_LOADED
 };
 
 BaseGameLogic.prototype.Init = function(){
@@ -40,12 +43,14 @@ BaseGameLogic.prototype.Init = function(){
     this.processMgr = new ProcessManager();
     
     g_evtMgr.Register(GameEvent.REQUEST_DESTROY_ACTOR, MAKEDELEGATE(this, RequestNewDestroyActorDelegate));
+    g_evtMgr.Register(GameEvent.ENVIRONMENT_LOADED, MAKEDELEGATE(this, EnvironmentLoadedDelegate));
+    g_evtMgr.Register(GameEvent.REMOTE_ENVIRONMENT_LOADED, MAKEDELEGATE(this, EnvironmentLoadedDelegate));
     
 };
 
 /**
  * That means we are joining an game already running
- * We are the remote player ?
+ * so, It means we are the remote player
  */
 BaseGameLogic.prototype.SetProxy = function(){
     this.proxy = true;
@@ -59,10 +64,36 @@ BaseGameLogic.prototype.SetProxy = function(){
     //this.physics = null;
 };
 
+/**
+ * Tell us if we are a remote player
+ * 
+ * In the book if this is true we have a remote game logic
+ * 
+ * @returns {Boolean}
+ */
+BaseGameLogic.prototype.IsRemote = function(){
+    return this.proxy;
+};
+
+/**
+ * Tell us if we are a local player
+ * 
+ * [note] local player and server machine is the same thing
+ *  
+ * @returns {Boolean}
+ */
+BaseGameLogic.prototype.IsLocal = function(){
+    return !this.proxy;
+};
+
+var EnvironmentLoadedDelegate = function(eventArgs){
+    this.humanGamesLoaded++;
+};
+
 var RequestNewActorDelegate = function(eventArgs){
     // This should only happen if the game logic is a proxy, 
     // and there's a server asking us to create an actor.
-    if(!this.proxy){
+    if(this.IsLocal()){
         return;
     }
     
@@ -128,10 +159,10 @@ BaseGameLogic.prototype.LoadGame = function(levelName){
     
     // trigger the Environment Loaded Game event 
     // - only then can player actors and AI be spawned!
-    if(this.proxy){
+    if(this.IsRemote()){//remote player
         g_evtMgr.FireEvent(GameEvent.REMOTE_ENVIRONMENT_LOADED, levelName);
     }
-    else{
+    else{//local player
         g_evtMgr.FireEvent(GameEvent.ENVIRONMENT_LOADED, levelName);
     }
     return true;
@@ -174,7 +205,7 @@ BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*opti
     if (!this.proxy && serverId !== null){
         return new Actor(serverId);
     }*/
-    if (this.proxy /*&& serverId === null*/){
+    if (this.isRemote() /*&& serverId === null*/){
         return null;
     }
     
@@ -183,7 +214,7 @@ BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*opti
     var actor = this.actorFactory.CreateActor(actorResource);
     if(actor){
         this.actorsMap[actor.GetId()] = actor;
-        if(!this.proxy && (this.gameState === GameState.SpawningPlayerActors || this.gameState === GameState.Running)){
+        if(this.IsLocal() && (this.gameState === GameState.SpawningPlayerActors || this.gameState === GameState.Running)){
             g_evtMgr.FireEvent(GameEvent.REQUEST_NEW_ACTOR, actorResource, actor.GetId());
         }
     }
@@ -278,7 +309,7 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
             for(var i=0; i < this.expectedPlayers; i++){
                 var humanView = new HumanView(g_GameApp.Renderer);
                 this.AddView(humanView);
-                if(this.proxy){
+                if(this.IsRemote()){
                     return;
                 }
             }
@@ -306,27 +337,39 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
             break;
         
         case GameState.SpawningPlayerActors:
-            if(this.proxy){
+            if(this.isRemote()){
                 return;
             }
             
             for(var i=0; i < this.gameViewList.length; i++){
+                var view = this.gameViewList[i];
                 switch(view.GetType()){
                     case GameView.HUMAN_VIEW:
-                      
+                       /*var actor = this.CreateActor("Assets/Actor/Player.xml");
+                       if(actor){
+                           g_evtMgr.QueueEvent(GameEvent.NEW_ACTOR, actor.GetId(), view.GetId());
+                       }*/
                        break;
                     case GameView.NETWORK_VIEW:
-                       
+                       /*var actor = this.CreateActor("Assets/Actor/RemotePlayer.xml");
+                       if(actor){
+                           g_evtMgr.QueueEvent(GameEvent.NEW_ACTOR, actor.GetId(), view.GetId());
+                       }*/
                        break;
                     case GameView.AI_VIEW:
-                       
+                       /*var actor = this.CreateActor("Assets/Actor/AiPlayer.xml");
+                       if(actor){
+                           g_evtMgr.QueueEvent(GameEvent.NEW_ACTOR, actor.GetId(), view.GetId());
+                       }*/
                        break;
                 }
             }
             break;
         case GameState.WaitingForPlayersToLoadEnvironment:
             
-            
+            if(this.expectedPlayers + this.expectedRemotePlayers < this.humanGamesLoaded){
+                this.ChangeState(GameState.SpawningPlayerActors);
+            }
             break;
     }
     
