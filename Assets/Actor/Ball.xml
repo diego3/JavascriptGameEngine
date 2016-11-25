@@ -8,5 +8,7 @@
         <Color r="0" g="0" b="255" a="1" />
     </BaseRenderComponent>
     
-    
+    <WASDControllerComponent>
+        
+    </WASDControllerComponent>
 </Actor>

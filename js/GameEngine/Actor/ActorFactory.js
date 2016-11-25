@@ -9,6 +9,7 @@ var ActorFactory = function () {
 ActorFactory.prototype.RegisterComponentFactory = function () {
     this.componentFactory[TransformComponent.NAME]  = TransformComponent;
     this.componentFactory[BaseRenderComponent.NAME] = BaseRenderComponent;
+    this.componentFactory[WASDControllerComponent.NAME] = WASDControllerComponent;
     
     
     //http://robdodson.me/javascript-design-patterns-factory/

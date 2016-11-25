@@ -2,11 +2,12 @@
 
 /* global g_evtMgr */
 
-var SceneNode = function(actorId, renderComponent){
+var SceneNode = function(actorId, renderComponent, transformComponent){
     this.childs = [];
-    this.actorId = actorId;
     this.parentNode = null;
-    this.renderComponent = renderComponent || null;
+    this.actorId = actorId;
+    this.renderComponent = renderComponent;
+    this.transformComponent = transformComponent;
 };
 
 SceneNode.prototype.AddChild = function(node){
@@ -78,8 +79,10 @@ RootNode.prototype.AddChild = function(){
 };*/
 
 //Just for Test and learning
-var TestSceneNode = function(){
-    
+var TestSceneNode = function(actorId,renderComponent,transformComponent){
+    this.actorId = actorId;
+    this.renderComponent = renderComponent;
+    this.transformComponent = transformComponent;
 };
 TestSceneNode.Extends(SceneNode);
 
@@ -89,8 +92,9 @@ TestSceneNode.prototype.Render = function(scene){
     
     ctx.clearRect(0, 0, 800, 600);//clear the entire canvas view
     
+    var pos = this.transformComponent.position;
     ctx.fillStyle = "blue";//"rgba(255,0,0,1)";
-    ctx.fillRect(0,0,40,40);
+    ctx.fillRect(pos[0], pos[1], 40,40);
     
 };
 

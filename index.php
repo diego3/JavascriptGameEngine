@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-6">
-            <canvas id="canvas" width="800" height="600" class=""></canvas>
+            <canvas id="canvas"></canvas>
         </div>
         <div id="hierarchy-col">
             <!--div class="panel panel-default">

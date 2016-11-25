@@ -26,6 +26,9 @@ define(function(require){
     require("./GameEngine/Core/BaseGameLogic");
     require("./GameEngine/Core/BaseApplication");
     
+    //specific components
+    require("./GameEngine/Actor/WASDControllerComponent");
+    
     g_GameApp = new BaseApplication();
     //console.log(g_GameApp);
     

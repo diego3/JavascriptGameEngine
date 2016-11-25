@@ -33,21 +33,47 @@ var KEY = {
 var InputManager = {
     
     keys: [],
-    mouse:{
+    mouseMove:{
         x:0,
         y:0
+    },
+    mouseDown:{
+       x:0,
+       y:0
+    },
+    mouseUp:{
+       x:0,
+       y:0
+    },
+    mouseClick:{
+       x:0,
+       y:0
     },
     
     IsKeyPressed:function(key){
         return this.keys[key];  
     },
     
-    GetMousePosVec2:function(){
+    GetMouseMovePosVec2:function(){
         var vpos = vec2.create();
-        vec2.set(vpos, this.mouse.x, this.mouse.y);
+        vec2.set(vpos, this.mouseMove.x, this.mouseMove.y);
         return vpos;
     },
-    
+    GetMouseClickPosVec2:function(){
+        var vpos = vec2.create();
+        vec2.set(vpos, this.mouseClick.x, this.mouseClick.y);
+        return vpos;
+    },
+    GetMouseDownPosVec2:function(){
+        var vpos = vec2.create();
+        vec2.set(vpos, this.mouseDown.x, this.mouseDown.y);
+        return vpos;
+    },
+    GetMouseUpPosVec2:function(){
+        var vpos = vec2.create();
+        vec2.set(vpos, this.mouseUp.x, this.mouseUp.y);
+        return vpos;
+    },
     MouseIntersectVec2:function(/*Rectangle*/ point2D){
         if(this.mouse.x >= point2D.x &&
            this.mouse.x <= point2D.x + point2D.width && //point2D.x + point2D.width = right     
@@ -71,18 +97,17 @@ var InputManager = {
         }, false);
         
         
-        //element.addEventListener("mousedown", this.OnMouseDown, false);
-        //element.addEventListener("mouseup", this.OnMouseUp, false);
-       // element.addEventListener("mouseout", this.OnMouseOut, false);
+        canvas.addEventListener("mousedown", this.OnMouseDown, false);
+        canvas.addEventListener("mouseup", this.OnMouseUp, false);
+        //canvas.addEventListener("mouseout", this.OnMouseOut, false);
         canvas.addEventListener("mousemove", this.OnMouseMove, false);
-        canvas.addEventListener("click", function(evt){
-            console.log("click target", evt);
-        }, false);
+        canvas.addEventListener("click", this.OnClick, false);
         
         document.getElementById("start").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.START_ENGINE);
         }, false);
         
+        //special event listeners
         document.getElementById("stop").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.PAUSE_FRAME);
         }, false);
@@ -92,31 +117,25 @@ var InputManager = {
         document.getElementById("addactor").addEventListener("click", function(evt){
             g_evtMgr.FireEvent(EditorEvent.ADD_ACTOR_TEST);
         }, false);
-        
     },
     OnMouseMove:function(evt){
-        InputManager.mouse.x = evt.x;
-        InputManager.mouse.y = evt.y;
+        InputManager.mouseMove.x = evt.x;
+        InputManager.mouseMove.y = evt.y;
+    },
+    OnMouseDown:function(evt){
+        InputManager.mouseDown.x = evt.x;
+        InputManager.mouseDown.y = evt.y;  
+    },
+    OnMouseUp:function(evt){
+        InputManager.mouseUp.x = evt.x;
+        InputManager.mouseUp.y = evt.y;  
+    },
+    OnClick:function(evt){
+        InputManager.mouseClick.x = evt.x;
+        InputManager.mouseClick.y = evt.y;  
     },
     OnKey: function(ev, key, pressed) {
         this.keys[key] = pressed;
-        switch(key) {
-            case KEY.LEFT: 
-                
-                //g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, -1);
-                ev.preventDefault(); 
-            break;
-            case KEY.RIGHT:
-                //this.lastPressedKey = pressed ? KEY.RIGHT : null;
-                //g_evtMgr.FireEvent(GameEvent.ACTOR_MOVE, 1);
-                ev.preventDefault(); 
-                break;
-            case KEY.SPACE: 
-                //this.lastPressedKey = pressed ? KEY.SPACE : null;
-                
-                ev.preventDefault(); 
-            break;
-        }
         console.log(this.keys);
     }
 

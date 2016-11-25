@@ -1,4 +1,6 @@
 
+/* global vec2, g_evtMgr */
+
 var ActorComponent = function(){
     this.m_owner = null;//the actor who is parent from this component
 };
@@ -12,6 +14,7 @@ ActorComponent.prototype.GetOwner = function(){return this.m_owner;};
 
 var TransformComponent = function(){
     this.position = vec2.create();
+    this.pos = this.position;
 };
 TransformComponent.Extends(ActorComponent);
 TransformComponent.prototype.Update = function(fDeltaTime){};
@@ -41,7 +44,8 @@ BaseRenderComponent.prototype.VOnRender = function(){
 BaseRenderComponent.NAME = "BaseRenderComponent";
 BaseRenderComponent.prototype.GetName = function() { return BaseRenderComponent.NAME;};
 BaseRenderComponent.prototype.CreateSceneNode = function(){//factory method
-    return new TestSceneNode(this.GetOwner().GetId(), this);
+    var transform= this.GetOwner().GetComponent(TransformComponent.NAME);
+    return new TestSceneNode(this.GetOwner().GetId(), this, transform);
 };
 BaseRenderComponent.prototype.GetSceneNode=function(){
     if(!this.m_sceneNode){

@@ -24,8 +24,13 @@ BaseApplication.prototype.CreateGameAndView = function(){
 };
 
 BaseApplication.prototype.Initialize = function(){
+    GameOptions.Init("Asset/options");
+    this.gameOptions = GameOptions;
+    
     //initialize the canvas
     var canvas = document.getElementById("canvas");
+    canvas.setAttribute("height", this.gameOptions.m_ScreenSize.height);
+    canvas.setAttribute("width", this.gameOptions.m_ScreenSize.width);
     var ctx = canvas.getContext('2d');//Convas2DRenderer
     if(!ctx){
         this.LastError = "your browser do not support html5 canvas!";
@@ -41,9 +46,6 @@ BaseApplication.prototype.Initialize = function(){
         this.LastError = "GameLogic was not initialized";
         return false;
     }
-    
-    GameOptions.Init("Asset/options");
-    this.gameOptions = GameOptions;
     
     InputManager.Init();
     
