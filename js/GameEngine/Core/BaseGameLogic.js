@@ -8,7 +8,7 @@ var GameState = {
     Running:  2,
     MainMenu: 3,
     WaintingForPlayers:4,
-    WaintingForPlayersToLoadEnvironment:5,
+    WaitingForPlayersToLoadEnvironment:5,
     SpawningPlayerActors:6
 };
 
@@ -86,21 +86,54 @@ BaseGameLogic.prototype.OnActorMoveDelegate = function(eventArgs){
     
 };
 
-BaseGameLogic.prototype.LoadGame = function(levelName, callback){
+BaseGameLogic.prototype.LoadGameDelegate = function(xmlData){
+    
+    return true;
+};
+
+//called by GameApp::LoadGame on GameState.LoadingGameEnvironment
+BaseGameLogic.prototype.LoadGame = function(levelName){
     var req = new FileSystem();
     var rootNode = req.ReadXMLFile(levelName);
-        
+    if(!rootNode){
+        console.log("Failed to load level "+ levelName);
+        return false;
+    }    
+    
     // load all initial actors
-
-
-    //for each view we should call LoadGame too
-
+    var staticActorNode = rootNode.firstChild;
+    if(staticActorNode){
+        var actors = staticActorNode.children;
+        for(var i=0; i < actors.length; i++){
+            var actorResource = actors[i].getAttribute("resource");
+            var actor = this.CreateActor(actorResource);
+            if(actor){
+                g_evtMgr.FireEvent(GameEvent.NEW_ACTOR, actor.GetId());
+            }
+        }
+    }
+    
+    //init all the human view
+    for(var i=0; i < this.gameViewList.length; i++){
+        var view = this.gameViewList[i];
+        if(view.GetType() === GameView.HUMAN_VIEW){
+            view.LoadGame(staticActorNode);
+        }
+    }
+    
+    if(!this.LoadGameDelegate(staticActorNode)){
+        return false;
+    }
+    
     // trigger the Environment Loaded Game event 
     // - only then can player actors and AI be spawned!
     if(this.proxy){
-
+        g_evtMgr.FireEvent(GameEvent.REMOTE_ENVIRONMENT_LOADED, levelName);
     }
-    
+    else{
+        g_evtMgr.FireEvent(GameEvent.ENVIRONMENT_LOADED, levelName);
+    }
+    return true;
 };
 
 BaseGameLogic.prototype.AddView = function(view, actorId){
@@ -195,7 +228,7 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
             this.processMgr.Update(fDeltaTime);
             
             break;
-        case GameState.WaintingForPlayersToLoadEnvironment:
+        case GameState.WaitingForPlayersToLoadEnvironment:
             if(this.expectedPlayers + this.expectedRemotePlayers <= this.humanGamesLoaded){
                 this.ChangeState(GameState.SpawningPlayerActors);
             }
@@ -223,13 +256,13 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
             var status = g_GameApp.LoadGame();
             
             if(status){
-                this.ChangeState(GameState.WaintingForPlayersToLoadEnvironment);
+                this.ChangeState(GameState.WaitingForPlayersToLoadEnvironment);
             }
             else{
                 console.log("g_GameApp.LoadGame Failed to Load");
             }
             break;
-        case GameState.WaintingForPlayersToLoadEnvironment:
+        case GameState.WaitingForPlayersToLoadEnvironment:
             
             
             break;
