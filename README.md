@@ -7,18 +7,15 @@ and patterns applicables to the game development!
 
 The main aim is decoupling between all the game systems as possible
 
-TO FIX
-========================
-* console.log is spreding out 60 times per frame the message: "Invalid game state" 
 
-
-Some todos and cool things
+Features and todos
 ===================================
-* Actor Component Architecture
-* Game Looping
-* Base App class, Base Game logic class etc.
-* Asset Manager for caching
-* Tile mapping and level loading ( with screen loading :) )
+[ ] Actor Component Architecture
+[ ] Game Looping pattern
+[ ] Application, Game Logic and View layers
+[ ] Asset Manager for caching the game resources
+[ ] Tile mapping 
+[ ] Level loading screen
 
 Links
 =========
