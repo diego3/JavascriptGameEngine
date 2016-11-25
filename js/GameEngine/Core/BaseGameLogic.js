@@ -248,7 +248,8 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
             break;
         case GameState.WaitingForPlayers:
             
-            if(this.expectedPlayers + this.expectedRemotePlayers === this.humanPlayersAttached){
+            if(this.expectedPlayers + this.expectedRemotePlayers === 
+                    this.humanPlayersAttached + this.remotePlayersAttached){
                 // The server sends us the level name as a part of the login message. 
                 // We have to wait until it arrives before loading the level
                 if(g_GameApp.gameOptions.level !== ""){
@@ -289,13 +290,17 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
             //this.gameViewList pop menu view from the list 
             this.expectedPlayers = 1;
             this.expectedRemotePlayers = 0;//g_GameApp.gameOptions.expectedPlayers -1;
+            this.expectedAI = g_GameApp.gameOptions.numAIs;
             if(g_GameApp.gameOptions.gameHost !== ""){
                 this.SetProxy();
                 this.expectedAI=0;// the server will create these
                 this.expectedRemotePlayers =0;// the server will create these
                 
-                //attempt attach as client, if fails then redirect to MainMenu game state
-                
+                //try create and connect via WebSocket
+                if(!g_GameApp.AttachAsClient()){
+                    //this.ChangeState(GameState.MainMenu);
+                    //return;
+                }
             }
             else if(this.expectedPlayers > 0){
                 //so, we will need prepare the environment to support remote players
@@ -374,5 +379,13 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
     }
     
     this.gameState = newGameState;
+};
+
+/**
+ * 
+ * @returns {Number} GameState Enum
+ */
+BaseGameLogic.prototype.GetGameState = function(){
+    return this.gameState;
 };
 

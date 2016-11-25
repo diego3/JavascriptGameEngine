@@ -19,8 +19,8 @@ define(function(require){
     require("./GameEngine/Utils/FileSystem");
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
-    require("./GameEngine/Scene/Scene");
     require("./GameEngine/UserInterface/IScreenElement");
+    require("./GameEngine/Scene/Scene");
     require("./GameEngine/UserInterface/HumanView");
     require("./GameEngine/UserInterface/UI");
     require("./GameEngine/Core/BaseGameLogic");

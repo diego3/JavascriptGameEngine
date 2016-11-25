@@ -111,6 +111,17 @@ BaseApplication.prototype.RenderFrame = function(fDeltaTime){
     }
 };
 
+BaseApplication.prototype.AttachAsClient = function(){
+    //create the socket
+    
+    //try connect: if any error return false;
+    //if connected assign the socket to a this.socketManager
+    
+    //create CreateNetworkEventForwarder
+    console.log("networking not implemented yet");
+    return false;//networking not implemented yet
+};
+
 BaseApplication.prototype.GetHumanView = function(){
     var gameViewList = this.GameLogic.gameViewList;
     for(var i=0; i < gameViewList.length; i++){
