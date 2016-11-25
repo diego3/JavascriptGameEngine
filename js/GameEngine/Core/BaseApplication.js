@@ -89,13 +89,8 @@ var StopFrameDelegate = function() {
     }  
 };
 
-var ccc=0;
+
 BaseApplication.prototype.UpdateFrame = function(fDeltaTime){
-    ccc += fDeltaTime;
-    if(ccc > 1000){
-        console.log("UpdateFrame", fDeltaTime);
-        ccc = 0;
-    }
     
     //g_evtMgr.Update(fDeltaTime, 20);
     

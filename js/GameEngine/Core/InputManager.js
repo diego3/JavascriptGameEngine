@@ -31,7 +31,7 @@ var KEY = {
 
 
 var InputManager = {
-    
+    IsMouseDown:false,
     keys: [],
     mouseMove:{
         x:0,
@@ -124,11 +124,13 @@ var InputManager = {
     },
     OnMouseDown:function(evt){
         InputManager.mouseDown.x = evt.x;
-        InputManager.mouseDown.y = evt.y;  
+        InputManager.mouseDown.y = evt.y;
+        InputManager.IsMouseDown = true;
     },
     OnMouseUp:function(evt){
         InputManager.mouseUp.x = evt.x;
-        InputManager.mouseUp.y = evt.y;  
+        InputManager.mouseUp.y = evt.y;
+        InputManager.IsMouseDown = false;
     },
     OnClick:function(evt){
         InputManager.mouseClick.x = evt.x;

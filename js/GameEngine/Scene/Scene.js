@@ -93,7 +93,7 @@ TestSceneNode.prototype.Render = function(scene){
     ctx.clearRect(0, 0, 800, 600);//clear the entire canvas view
     
     var pos = this.transformComponent.position;
-    ctx.fillStyle = "blue";//"rgba(255,0,0,1)";
+    ctx.fillStyle = "rgba(0,0,255, 1)";
     ctx.fillRect(pos[0], pos[1], 40,40);
     
 };
