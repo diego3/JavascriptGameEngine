@@ -34,14 +34,23 @@ WASDControllerComponent.prototype.Update = function(fDeltaTime){
     var isRIGHT = InputManager.IsKeyPressed(KEY.RIGHT);
     
     if(isW || isUP){
-        //this.transform.pos
+        var newVec = this.transform.pos;//vec2.create();
+        var factor = vec2.fromValues(0, this.speed*fDeltaTime);
+        vec2.sub(newVec, this.transform.pos, factor);
+        this.transform.pos = newVec;
     }
     if(isA || isLEFT){
-        
+        var newVec = this.transform.pos;//vec2.create();
+        var factor = vec2.fromValues(this.speed*fDeltaTime,0);
+        vec2.sub(newVec, this.transform.pos, factor);
+        this.transform.pos = newVec;
     }
     
     if(isS || isDOWN){
-        
+        var newVec = this.transform.pos;//vec2.create();
+        var factor = vec2.fromValues(0, this.speed*fDeltaTime);
+        vec2.add(newVec, this.transform.pos, factor);
+        this.transform.pos = newVec;
     }
     
     var mousePosition = InputManager.GetMouseClickPosVec2();
