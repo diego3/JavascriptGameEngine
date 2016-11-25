@@ -1,7 +1,7 @@
 
 var GameOptions = {
     // Level option
-    level: "",
+    level: "level1_test",
     
     // Rendering options
     renderer: "2d",//webgl
@@ -15,7 +15,7 @@ var GameOptions = {
     //Multiplayer options
     expectedPlayers: 1,
     listenPort: 80,
-    gameHost: "jsengine.local",
+    gameHost: "",//jsengine.local
     numAIs: 0,
     maxAIs: 10,
     maxPlayers: 2,

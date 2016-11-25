@@ -7,7 +7,7 @@ var GameState = {
     LoadingGameEnvironment: 1,
     Running:  2,
     MainMenu: 3,
-    WaintingForPlayers:4,
+    WaitingForPlayers:4,
     WaitingForPlayersToLoadEnvironment:5,
     SpawningPlayerActors:6
 };
@@ -28,6 +28,7 @@ var BaseGameLogic = function(){
     this.expectedRemotePlayers = 0;
     this.expectedAI = 0;
     this.humanPlayersAttached = 0;
+    this.remotePlayersAttached = 0;
     this.AIPlayersAttached = 0;
     this.humanGamesLoaded = 0;
 };
@@ -87,7 +88,7 @@ BaseGameLogic.prototype.OnActorMoveDelegate = function(eventArgs){
 };
 
 BaseGameLogic.prototype.LoadGameDelegate = function(xmlData){
-    
+    // [rez] Override this function to do any game-specific loading.
     return true;
 };
 
@@ -101,7 +102,7 @@ BaseGameLogic.prototype.LoadGame = function(levelName){
     }    
     
     // load all initial actors
-    var staticActorNode = rootNode.firstChild;
+    var staticActorNode = rootNode.firstChild.firstElementChild;
     if(staticActorNode){
         var actors = staticActorNode.children;
         for(var i=0; i < actors.length; i++){
@@ -136,9 +137,23 @@ BaseGameLogic.prototype.LoadGame = function(levelName){
     return true;
 };
 
-BaseGameLogic.prototype.AddView = function(view, actorId){
-    view.Attach(++this.lastViewId, actorId);
+BaseGameLogic.prototype.AddView = function(view, /*optional?*/actorId){
+    //++this.lastViewId
+    view.Attach(actorId || 0, "view-"+UUID());
     this.gameViewList.push(view);
+    
+    //
+    switch(view.GetType()){
+        case GameView.HUMAN_VIEW:
+           this.humanPlayersAttached++;
+           break;
+        case GameView.NETWORK_VIEW:
+           this.remotePlayersAttached++;
+           break;
+        case GameView.AI_VIEW:
+           this.AIPlayersAttached++;
+           break;
+    }
 };
 
 BaseGameLogic.prototype.RemoveView = function(view){
@@ -155,12 +170,12 @@ BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*opti
     var overrides = overridesXML || null;
     var transform = initialTransform || null;
     var serverId  = serversActorId || null;
-    
+    /*
     if (!this.proxy && serverId !== null){
         return new Actor(serverId);
-    }
-    if (this.proxy && serverId === null){
-        return new Actor();
+    }*/
+    if (this.proxy /*&& serverId === null*/){
+        return null;
     }
     
     
@@ -195,33 +210,19 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
     switch(this.gameState){
         case GameState.Initializing:
             //this.ChangeState(GameState.MainMenu);
-            this.ChangeState(GameState.Running);//we dont have a menu view yet
+            this.ChangeState(GameState.WaitingForPlayers);//we dont have a menu view yet
             break;
         case GameState.MainMenu:
             
             break;
-        case GameState.WaintingForPlayers:
+        case GameState.WaitingForPlayers:
             
-            //this.gameViewList pop menu view from the list 
-            
-            this.expectedPlayers = g_GameApp.gameOptions.expectedPlayers -1;
-            if(g_GameApp.gameOptions.gameHost != ""){
-                this.SetProxy();
-                this.expectedAI=0;
-                this.expectedRemotePlayers =0;
-                
-                //attempt attach as client, if fails then redirect to MainMenu game state
-                
-            }
-            else if(this.expectedPlayers > 0){
-                //so, we will need prepare the environment to support remote players
-                //we need to initialize the sockets
-                
-                
-            }
-            
-            if(g_GameApp.gameOptions.level != ""){
-                this.ChangeState(GameState.LoadingGameEnvironment);
+            if(this.expectedPlayers + this.expectedRemotePlayers === this.humanPlayersAttached){
+                // The server sends us the level name as a part of the login message. 
+                // We have to wait until it arrives before loading the level
+                if(g_GameApp.gameOptions.level !== ""){
+                    this.ChangeState(GameState.LoadingGameEnvironment);
+                }
             }
             break;
         case GameState.Running:
@@ -252,6 +253,47 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
 BaseGameLogic.prototype.ChangeState = function(newGameState){
     
     switch(newGameState){
+        case GameState.WaitingForPlayers:
+            
+            //this.gameViewList pop menu view from the list 
+            this.expectedPlayers = 1;
+            this.expectedRemotePlayers = 0;//g_GameApp.gameOptions.expectedPlayers -1;
+            if(g_GameApp.gameOptions.gameHost !== ""){
+                this.SetProxy();
+                this.expectedAI=0;// the server will create these
+                this.expectedRemotePlayers =0;// the server will create these
+                
+                //attempt attach as client, if fails then redirect to MainMenu game state
+                
+            }
+            else if(this.expectedPlayers > 0){
+                //so, we will need prepare the environment to support remote players
+                //we need to initialize the sockets
+                
+                
+            }
+            
+            //extracted from TeapoWarsHumanView
+            //spawn all local players 
+            for(var i=0; i < this.expectedPlayers; i++){
+                var humanView = new HumanView(g_GameApp.Renderer);
+                this.AddView(humanView);
+                if(this.proxy){
+                    return;
+                }
+            }
+            
+            //spawn all remote players 
+            for(var i=0; i < this.expectedRemotePlayers; i++){
+                
+            }
+            
+            //spawn all AI players 
+            for(var i=0; i < this.expectedAI; i++){
+                
+            }
+            
+            break;
         case GameState.LoadingGameEnvironment:
             var status = g_GameApp.LoadGame();
             
@@ -262,11 +304,32 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
                 console.log("g_GameApp.LoadGame Failed to Load");
             }
             break;
+        
+        case GameState.SpawningPlayerActors:
+            if(this.proxy){
+                return;
+            }
+            
+            for(var i=0; i < this.gameViewList.length; i++){
+                switch(view.GetType()){
+                    case GameView.HUMAN_VIEW:
+                      
+                       break;
+                    case GameView.NETWORK_VIEW:
+                       
+                       break;
+                    case GameView.AI_VIEW:
+                       
+                       break;
+                }
+            }
+            break;
         case GameState.WaitingForPlayersToLoadEnvironment:
             
             
             break;
     }
     
+    this.gameState = newGameState;
 };
 

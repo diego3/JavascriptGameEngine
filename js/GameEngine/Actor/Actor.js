@@ -41,7 +41,7 @@ BaseRenderComponent.prototype.VOnRender = function(){
 BaseRenderComponent.NAME = "BaseRenderComponent";
 BaseRenderComponent.prototype.GetName = function() { return BaseRenderComponent.NAME;};
 BaseRenderComponent.prototype.CreateSceneNode = function(){//factory method
-    return new SceneNode(this.GetOwner(), this);
+    return new TestSceneNode(this.GetOwner().GetId(), this);
 };
 BaseRenderComponent.prototype.GetSceneNode=function(){
     if(!this.m_sceneNode){

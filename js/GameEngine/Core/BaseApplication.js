@@ -18,8 +18,8 @@ var BaseApplication = function(){
 BaseApplication.prototype.CreateGameAndView = function(){
     var logic = new BaseGameLogic();
     logic.Init();
-    var humanView = new HumanView(this.Renderer);
-    logic.AddView(humanView);
+    //var mainMenuView = new MainMenuView(this.Renderer);
+    //logic.AddView(mainMenuView);
     return logic;
 };
 
@@ -158,6 +158,6 @@ var AdvanceOneFrameDelegate = function(){
 
 
 BaseApplication.prototype.LoadGame = function(){
-    this.GameLogic.LoadGame("../../Assets/level1_test");
+    return this.GameLogic.LoadGame("../../Assets/level1_test");
     
 };

@@ -2,7 +2,7 @@
 
     <StaticActors>
         
-        <Actor resource="Assets/Actor/Background"></Actor>
+        <Actor resource="Assets/Actor/Ball"></Actor>
         
     </StaticActors>
     

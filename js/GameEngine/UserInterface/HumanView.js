@@ -31,7 +31,7 @@ var HumanView = function(Renderer){
         this.scene.RegisterDelegates();
         
         //this.scene = new ScreenElementScene(Renderer);//this is the correct Scene class, but that is not implemented yet
-        this.scene.AddChild(null/*cameraNode*/);
+        //this.scene.AddChild(null/*cameraNode*/);
         //this.Scene.SetCamera(cameraNode);
     }
 };
@@ -61,7 +61,7 @@ HumanView.prototype.GetId = function(){
 };
 
 HumanView.prototype.GetType = function(){
-    return this.type;
+    return GameView.HUMAN_VIEW;
 };
 
 HumanView.prototype.PushElement = function(screenElement){
@@ -77,6 +77,15 @@ HumanView.prototype.RemoveElement = function(screenElement){
     }
     //this.screenElementList.pop();
     this.needRevertSortScreenElements = true;
+};
+
+HumanView.prototype.LoadGame = function(xmlLevelData){
+    this.LoadGameDelegate(xmlLevelData);
+};
+
+HumanView.prototype.LoadGameDelegate = function(xmlLevelData){
+    this.PushElement(this.scene);
+    return true;
 };
 
 HumanView.prototype.GetProcessManager = function(){

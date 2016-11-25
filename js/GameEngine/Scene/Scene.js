@@ -2,9 +2,10 @@
 
 /* global g_evtMgr */
 
-var SceneNode = function(parentNode, renderComponent){
+var SceneNode = function(actorId, renderComponent){
     this.childs = [];
-    this.parentNode = parentNode || null;
+    this.actorId = actorId;
+    this.parentNode = null;
     this.renderComponent = renderComponent || null;
 };
 
@@ -33,7 +34,7 @@ SceneNode.prototype.IsVisible = function(Scene){
 };
 
 SceneNode.prototype.RenderChildren = function(Scene){
-    for(var child in childs){
+    for(var child in this.childs){
         
         if(child.PreRender(Scene)){
             
@@ -47,7 +48,7 @@ SceneNode.prototype.RenderChildren = function(Scene){
 };
 
 SceneNode.prototype.Update = function(Scene, fDeltaTime){
-    for(var child in childs){
+    for(var child in this.childs){
         child.Update(Scene, fDeltaTime);
     }
 };
@@ -76,6 +77,17 @@ RootNode.prototype.AddChild = function(){
     
 };*/
 
+//Just for Test and learning
+var TestSceneNode = function(){
+    
+};
+TestSceneNode.Extends(SceneNode);
+
+TestSceneNode.prototype.Render = function(scene){
+    var ctx = scene.GetRenderer();
+    
+    
+};
 
 /**
  * The top-level management of the entire scene node hierarchy rests in the capable
@@ -122,7 +134,7 @@ Scene.prototype.AddChild = function(ActorID, SceneNode){
     
     this.sceneActorMap[ActorID] = SceneNode;
     
-    //this.rootNode.AddChild(SceneNode);
+    this.rootNode.AddChild(SceneNode);
 };
 
 Scene.prototype.RemoveChild = function(ActorID){
@@ -134,13 +146,18 @@ Scene.prototype.RemoveChild = function(ActorID){
 };
 
 Scene.prototype.Render = function(){
-    if(this.rootNode && this.cameraNode){
+    //var ctx = this.Renderer;
+    //ctx.clearRect();
+    
+    if(this.rootNode/* && this.cameraNode*/){
         if(this.rootNode.PreRender(this)){
             this.rootNode.Render(this);
             this.rootNode.RenderChildren(this);
             this.rootNode.PosRender(this);
         }
     }
+    
+    
 };
 
 Scene.prototype.OnUpdate = function(fDeltaTime){
