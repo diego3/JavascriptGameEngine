@@ -7,6 +7,15 @@ and patterns applicables to the game development!
 
 The main aim is decoupling between all the game systems as possible
 
+TO FIX
+========================
+* No one is listening for a game state event: GameEvent.ENVIRONMENT_LOADED on BaseGameLogic.js line 135
+it seems like we need change to another game status, but I really don't know yeat, 
+Check out the source code from the book to see how it works!
+
+* Implement ScreenElementNode extending IScreenElement and SceneNode 
+
+
 Some todos and cool things
 ===================================
 * Actor Component Architecture
