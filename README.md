@@ -10,11 +10,11 @@ The main aim is decoupling between all the game systems as possible
 
 Features and todos
 ===================================
-- [ ]  Actor Component Architecture
+- [X]  Actor Component Architecture
 
-- [ ]  Game Looping pattern
+- [X]  Game Looping pattern
 
-- [ ]  Application, Game Logic and View layers
+- [X]  Application, Game Logic and View layers
 
 - [ ]  Asset Manager for caching the game resources
 
