@@ -246,6 +246,9 @@ BaseGameLogic.prototype.Update = function(fDeltaTime){
         case GameState.MainMenu:
             
             break;
+        case GameState.LoadingGameEnvironment:
+            //only ChangeState take care this
+            break;
         case GameState.WaitingForPlayers:
             
             if(this.expectedPlayers + this.expectedRemotePlayers === 
