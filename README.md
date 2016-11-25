@@ -9,7 +9,7 @@ The main aim is decoupling between all the game systems as possible
 
 TO FIX
 ========================
-* Implement ScreenElementNode extending IScreenElement and SceneNode 
+* console.log is spreding out 60 times per frame the message: "Invalid game state" 
 
 
 Some todos and cool things
