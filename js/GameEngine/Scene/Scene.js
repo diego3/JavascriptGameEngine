@@ -34,22 +34,22 @@ SceneNode.prototype.IsVisible = function(Scene){
 };
 
 SceneNode.prototype.RenderChildren = function(Scene){
-    for(var child in this.childs){
-        
-        if(child.PreRender(Scene)){
-            
-            if(child.IsVisible(Scene)){
-                child.Render(Scene);
-                child.RenderChildren(Scene);
+    for(var i=0; i < this.childs.length; i++){
+        var sceneNode = this.childs[i];
+        if(sceneNode.PreRender(Scene)){
+            if(sceneNode.IsVisible(Scene)){
+                sceneNode.Render(Scene);
+                sceneNode.RenderChildren(Scene);
             }
         }
-        child.PosRender(Scene);
+        sceneNode.PosRender(Scene);
     }
 };
 
 SceneNode.prototype.Update = function(Scene, fDeltaTime){
-    for(var child in this.childs){
-        child.Update(Scene, fDeltaTime);
+    for(var i=0; i < this.childs.length; i++){
+        var sceneNode = this.childs[i];
+        sceneNode.Update(Scene, fDeltaTime);
     }
 };
 
@@ -83,9 +83,14 @@ var TestSceneNode = function(){
 };
 TestSceneNode.Extends(SceneNode);
 
+//https://developer.mozilla.org/en/docs/Web/API/CanvasRenderingContext2D
 TestSceneNode.prototype.Render = function(scene){
     var ctx = scene.GetRenderer();
     
+    ctx.clearRect(0, 0, 800, 600);//clear the entire canvas view
+    
+    ctx.fillStyle = "blue";//"rgba(255,0,0,1)";
+    ctx.fillRect(0,0,40,40);
     
 };
 
@@ -101,12 +106,15 @@ var Scene = function(Renderer){
     this.cameraNode = null;
     this.Renderer   = Renderer;
     this.sceneActorMap = {};//map["actorid"] = SceneNodeInstance
+    
+    g_evtMgr.Register("NEW_RENDER_COMPONENT", MAKEDELEGATE(this, NewRenderComponentDelegate));
 };
 
+/*
 Scene.prototype.RegisterDelegates = function(){
     g_evtMgr.Register("NEW_RENDER_COMPONENT", MAKEDELEGATE(this, NewRenderComponentDelegate));
     
-};
+};*/
 
 Scene.prototype.GetRenderer = function(){
     return this.Renderer;
@@ -163,6 +171,35 @@ Scene.prototype.Render = function(){
 Scene.prototype.OnUpdate = function(fDeltaTime){
     
     
+};
+
+
+//
+// [note] An instance of this class is assinged to HumanView into its constructor
+// [note] The Scene constructor create and assing a RootNode to a Scene
+//
+var ScreenElementScene = function(Renderer){
+    this.scene = new Scene(Renderer);
+};
+
+//ScreenElementScene.Extends(Scene);
+ScreenElementScene.Extends(IScreenElement);
+
+ScreenElementScene.prototype.OnRender = function(fDeltaTime){
+    this.scene.Render();
+};
+
+ScreenElementScene.prototype.OnUpdate = function(fDeltaTime){
+    this.scene.OnUpdate(fDeltaTime);
+};
+
+ScreenElementScene.prototype.SetZOrder = function(z){};
+ScreenElementScene.prototype.GetZOrder = function(){ return 0;};
+ScreenElementScene.prototype.ProcessInput = function(){};//don't handle any messages
+ScreenElementScene.prototype.IsVisible  = function(){ return true;};
+ScreenElementScene.prototype.SetVisible = function(boolValue){};
+ScreenElementScene.prototype.AddChild = function(ActorID, SceneNode){
+    this.scene.AddChild(ActorID, SceneNode);
 };
 
 /**

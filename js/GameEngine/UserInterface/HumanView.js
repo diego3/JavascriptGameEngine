@@ -27,10 +27,9 @@ var HumanView = function(Renderer){
     
     if(Renderer){
         this.ctx = Renderer;//canvas contex
-        this.scene = new Scene(Renderer);//for a while, it should be removed
-        this.scene.RegisterDelegates();
         
-        //this.scene = new ScreenElementScene(Renderer);//this is the correct Scene class, but that is not implemented yet
+        this.scene = new ScreenElementScene(Renderer);
+        
         //this.scene.AddChild(null/*cameraNode*/);
         //this.Scene.SetCamera(cameraNode);
     }
@@ -84,7 +83,7 @@ HumanView.prototype.LoadGame = function(xmlLevelData){
 };
 
 HumanView.prototype.LoadGameDelegate = function(xmlLevelData){
-    this.PushElement(this.scene);
+    //this.PushElement(this.scene);
     return true;
 };
 
@@ -126,7 +125,7 @@ HumanView.prototype.OnRender = function(fDeltaTime){
         }
     }
     
-    this.scene.Render();
+    this.scene.OnRender(fDeltaTime);
     
     this.RenderText(fDeltaTime);
     

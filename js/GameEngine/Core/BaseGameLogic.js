@@ -205,7 +205,7 @@ BaseGameLogic.prototype.CreateActor = function(actorResource, overridesXML/*opti
     if (!this.proxy && serverId !== null){
         return new Actor(serverId);
     }*/
-    if (this.isRemote() /*&& serverId === null*/){
+    if (this.IsRemote() /*&& serverId === null*/){
         return null;
     }
     
@@ -342,7 +342,7 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
             break;
         
         case GameState.SpawningPlayerActors:
-            if(this.isRemote()){
+            if(this.IsRemote()){
                 return;
             }
             
@@ -372,7 +372,7 @@ BaseGameLogic.prototype.ChangeState = function(newGameState){
             break;
         case GameState.WaitingForPlayersToLoadEnvironment:
             
-            if(this.expectedPlayers + this.expectedRemotePlayers < this.humanGamesLoaded){
+            if(this.expectedPlayers + this.expectedRemotePlayers <= this.humanGamesLoaded){
                 this.ChangeState(GameState.SpawningPlayerActors);
             }
             break;

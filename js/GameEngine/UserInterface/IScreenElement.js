@@ -1,7 +1,7 @@
 
 
 var IScreenElement = function(){
-    this.zorder = 1;
+    this.zorder = 0;
     this.visible = true;
 };
 IScreenElement.prototype.OnUpdate = function(fDeltaTime){};
