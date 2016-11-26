@@ -225,8 +225,6 @@ ScreenElementScene.prototype.AddChild = function(ActorID, SceneNode){
  * CreateSceneNode
  */
 var NewRenderComponentDelegate = function(eventArgs){
-    console.log("NewRenderComponentDelegate", eventArgs);
-    
     var actorId = eventArgs[0];
     var sceneNode = eventArgs[1];
     this.AddChild(actorId, sceneNode);
