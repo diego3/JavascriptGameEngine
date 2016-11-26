@@ -99,7 +99,8 @@ TestSceneNode.prototype.Render = function(scene){
     var wCenter = pos[0] + 40 /2;
     var hCenter = pos[1] + 40 /2;
     ctx.translate(wCenter, hCenter);/// make sure pivot is moved to center
-    ctx.rotate((this.transformComponent.rotation) * Math.PI / 180);
+    var rotation = (this.transformComponent.rotation); /** Math.PI / 180*/;
+    ctx.rotate(rotation);
     ctx.translate(-wCenter, -hCenter); /// translate back before drawing the sprite
     
     ctx.fillRect(pos[0], pos[1], 40,40);

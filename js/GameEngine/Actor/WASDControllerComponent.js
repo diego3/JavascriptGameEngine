@@ -101,18 +101,17 @@ WASDControllerComponent.prototype.Update = function(fDeltaTime){
     var target = InputManager.GetMouseMovePosVec2();
     
     //http://stackoverflow.com/questions/2625021/game-enemy-move-towards-player
-    var dist = vec2.distance(this.transform.pos, target);
-    var dir  = vec2.normalize(vec2.create(), target);
+    //var dist = vec2.distance(this.transform.pos, target);
+    //var dir  = vec2.normalize(vec2.create(), target);
     
     if(InputManager.IsMouseDown){
         //console.log("distance", dist, "dir", dir);
        
-        
     }
-     var dot = vec2.dot(target, this.transform.pos);
+    // var dot = vec2.dot(target, this.transform.pos);
      //dot = dot < 0 ? dot : -dot;
     //console.log("dot", dot);
-    this.transform.rotation = Math.atan(dot);
+    //this.transform.rotation = Math.atan(dot);
     //var moveTo = vec2.fromValues(this.speed*dir[0],this.speed*dir[1]);
     //this.transform.pos = vec2.add(this.transform.pos, this.transform.pos, moveTo);
     

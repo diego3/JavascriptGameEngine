@@ -7,6 +7,7 @@ var AIComponent = function(){
     this.maxSpeed = 15;
     
     this.tick = 0;
+    this.right = vec2.fromValues(1,0);
 };
 AIComponent.Extends(ActorComponent);
 AIComponent.NAME = "AIComponent";
@@ -20,22 +21,17 @@ AIComponent.prototype.PosInit = function(){
 };
 
 AIComponent.prototype.Update = function(fDeltaTime){
-    //var target = InputManager.GetMouseClickPosVec2();
-    var target = vec2.fromValues(50,80);
+    var target = InputManager.GetMouseMovePosVec2();
     
     //http://stackoverflow.com/questions/2625021/game-enemy-move-towards-player
     var dist = vec2.distance(this.transform.pos, target);
     var dir  = vec2.normalize(vec2.create(), target);
     
-    if(InputManager.IsMouseDown){
-        //console.log("distance", dist, "dir", dir);
-       
-        
-    }
-     var dot = vec2.dot(target, this.transform.pos);
+    
+    var dot = vec2.dot(this.right, dir);
      //dot = dot < 0 ? dot : -dot;
-    //console.log("dot", dot);
-    this.transform.rotation = Math.atan(dot);
+    
+    this.transform.rotation = Math.acos(dot);
     
 };
 

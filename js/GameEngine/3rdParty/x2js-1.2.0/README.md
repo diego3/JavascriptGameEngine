@@ -3,6 +3,8 @@ x2js - XML to JSON and vice versa for JavaScript
 This library provides XML to JSON (JavaScript Objects) and vice versa javascript conversion functions.
 The library is very small and has no any dependencies.
 
+https://github.com/abdmob/x2js
+
 ## API functions
 
  * `new X2JS()` - to create your own instance to access all library functionality
