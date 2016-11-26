@@ -8,6 +8,8 @@ var AIComponent = function(){
     
     this.tick = 0;
     this.right = vec2.fromValues(1,0);
+    this.left = vec2.fromValues(-1,0);
+    this.dot = vec2.fromValues(1,0);
 };
 AIComponent.Extends(ActorComponent);
 AIComponent.NAME = "AIComponent";
@@ -31,13 +33,19 @@ AIComponent.prototype.RotationTest = function(fDeltaTime){
     //http://stackoverflow.com/questions/2625021/game-enemy-move-towards-player
     var dist = vec2.distance(this.transform.pos, target);
     var dir  = vec2.normalize(vec2.create(), target);
+    var dot;
     
-    
-    var dot = vec2.dot(this.right, dir);
-     //dot = dot < 0 ? dot : -dot;
-    if(dir[1] < 0){
-        dot = -dot;
+    if(target[0] > this.transform.pos[0]){
+        dot = vec2.dot(this.right, dir);
     }
+    else{
+        dot = vec2.dot(this.left, dir);
+    }
+    
+    //if(dir[0] < 0){
+    //    dot = -dot;
+    //}
+    
     this.transform.rotation = Math.acos(dot);
 };
 

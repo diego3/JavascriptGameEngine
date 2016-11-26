@@ -1,7 +1,7 @@
 <Actor type="ball" id="">
 
     <TransformComponent>
-        <Position x="100" y="100" />
+        <Position x="380" y="300" />
     </TransformComponent>
     
     <BaseRenderComponent>

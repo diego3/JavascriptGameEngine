@@ -75,9 +75,15 @@ BaseRenderComponent.prototype.PosInit = function(){
     //principal listener is Scene class
 };
 
-
-var Actor = function(id){
+/**
+ * 
+ * @param {string} id
+ * @param {string} tag 
+ * @returns {Actor}
+ */
+var Actor = function(id, tag){
     this.m_id = id || null;
+    this.tag = tag || "";
     this.components = [];// {name:"", instance:}
 };
 

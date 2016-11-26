@@ -95,16 +95,19 @@ TestSceneNode.prototype.Render = function(scene){
     var color = this.renderComponent.color;
     
     ctx.fillStyle = "rgba("+color.r+","+color.g+","+color.b+", "+color.a+")";
-    
     var wCenter = pos[0] + 40 /2;
     var hCenter = pos[1] + 40 /2;
     ctx.translate(wCenter, hCenter);/// make sure pivot is moved to center
-    var rotation = (this.transformComponent.rotation); /** Math.PI / 180*/;
-    ctx.rotate(rotation);
+    var agle = (this.transformComponent.rotation); /** Math.PI / 180*/;
+    ctx.rotate(agle);//angle should be radians
     ctx.translate(-wCenter, -hCenter); /// translate back before drawing the sprite
     
     ctx.fillRect(pos[0], pos[1], 40,40);
     ctx.restore();
+    
+    ctx.font = "24 pt Arial";
+    ctx.fillStyle = "rgba(155,155,200,1)";
+    ctx.fillText("ANGLE: "+agle, 800*0.5,10);
 };
 
 /**
