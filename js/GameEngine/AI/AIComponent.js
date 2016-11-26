@@ -35,7 +35,9 @@ AIComponent.prototype.RotationTest = function(fDeltaTime){
     
     var dot = vec2.dot(this.right, dir);
      //dot = dot < 0 ? dot : -dot;
-    
+    if(dir[1] < 0){
+        dot = -dot;
+    }
     this.transform.rotation = Math.acos(dot);
 };
 

@@ -123,12 +123,6 @@ var Scene = function(Renderer){
     g_evtMgr.Register("NEW_RENDER_COMPONENT", MAKEDELEGATE(this, NewRenderComponentDelegate));
 };
 
-/*
-Scene.prototype.RegisterDelegates = function(){
-    g_evtMgr.Register("NEW_RENDER_COMPONENT", MAKEDELEGATE(this, NewRenderComponentDelegate));
-    
-};*/
-
 Scene.prototype.GetRenderer = function(){
     return this.Renderer;
 };
