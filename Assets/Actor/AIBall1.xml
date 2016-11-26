@@ -1,19 +1,18 @@
-<Actor type="ball" id="1152">
+<Actor type="ball" id="">
 
     <TransformComponent>
-        <Position x="" y="" />
+        <Position x="100" y="100" />
     </TransformComponent>
     
-    <RenderComponent>
-        <Color r="" g="" b="" />
-        <Texture src="Assets/Art/" />
-        <Shader src="Assets/Shader/"/>
-    </RenderComponent>
+    <BaseRenderComponent>
+        <Color r="255" g="0" b="0" a="1" />
+    </BaseRenderComponent>
     
     <AIComponent>
         
     </AIComponent>
     
+    <!--
     <NetworkComponent>
         
     </NetworkComponent>
@@ -21,4 +20,5 @@
     <SoundComponent>
         
     </SoundComponent>
+    -->
 </Actor>

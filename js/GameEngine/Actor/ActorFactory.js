@@ -10,6 +10,7 @@ ActorFactory.prototype.RegisterComponentFactory = function () {
     this.componentFactory[TransformComponent.NAME]  = TransformComponent;
     this.componentFactory[BaseRenderComponent.NAME] = BaseRenderComponent;
     this.componentFactory[WASDControllerComponent.NAME] = WASDControllerComponent;
+    this.componentFactory[AIComponent.NAME] = AIComponent;
     
     
     //http://robdodson.me/javascript-design-patterns-factory/
@@ -46,7 +47,7 @@ ActorFactory.prototype.CreateActor = function (actorResource) {
             actorComponent.SetOwner(actor);
         }
         else {
-            console.log("component is null " + componentXmlNode);
+            console.log("component is null " + componentXmlNode.nodeName);
         }
     }
     actor.PosInit();

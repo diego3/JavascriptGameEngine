@@ -16,7 +16,7 @@ SceneNode.prototype.AddChild = function(node){
 };
 
 SceneNode.prototype.PreRender = function(Scene){
-  
+    
     return true;//by default
 };
 
@@ -89,13 +89,21 @@ TestSceneNode.Extends(SceneNode);
 //https://developer.mozilla.org/en/docs/Web/API/CanvasRenderingContext2D
 TestSceneNode.prototype.Render = function(scene){
     var ctx = scene.GetRenderer();
-    
-    ctx.clearRect(0, 0, 800, 600);//clear the entire canvas view
+    ctx.save();
     
     var pos = this.transformComponent.position;
-    ctx.fillStyle = "rgba(0,0,255, 1)";
-    ctx.fillRect(pos[0], pos[1], 40,40);
+    var color = this.renderComponent.color;
     
+    ctx.fillStyle = "rgba("+color.r+","+color.g+","+color.b+", "+color.a+")";
+    
+    var wCenter = pos[0] + 40 /2;
+    var hCenter = pos[1] + 40 /2;
+    ctx.translate(wCenter, hCenter);/// make sure pivot is moved to center
+    ctx.rotate((this.transformComponent.rotation) * Math.PI / 180);
+    ctx.translate(-wCenter, -hCenter); /// translate back before drawing the sprite
+    
+    ctx.fillRect(pos[0], pos[1], 40,40);
+    ctx.restore();
 };
 
 /**
@@ -158,8 +166,8 @@ Scene.prototype.RemoveChild = function(ActorID){
 };
 
 Scene.prototype.Render = function(){
-    //var ctx = this.Renderer;
-    //ctx.clearRect();
+    var ctx = this.Renderer;
+    ctx.clearRect(0, 0, 800, 600);//clear the entire canvas view
     
     if(this.rootNode/* && this.cameraNode*/){
         if(this.rootNode.PreRender(this)){

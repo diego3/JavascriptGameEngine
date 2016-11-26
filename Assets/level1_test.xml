@@ -3,6 +3,7 @@
     <StaticActors>
         
         <Actor resource="Assets/Actor/Ball"></Actor>
+        <Actor resource="Assets/Actor/AIBall1"></Actor>
         
     </StaticActors>
     

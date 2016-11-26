@@ -138,7 +138,6 @@ var InputManager = {
     },
     OnKey: function(ev, key, pressed) {
         this.keys[key] = pressed;
-        console.log(this.keys);
     }
 
 };

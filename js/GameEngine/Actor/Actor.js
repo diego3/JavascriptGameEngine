@@ -15,6 +15,7 @@ ActorComponent.prototype.GetOwner = function(){return this.m_owner;};
 var TransformComponent = function(){
     this.position = vec2.create();
     this.pos = this.position;
+    this.rotation = 0;
 };
 TransformComponent.Extends(ActorComponent);
 TransformComponent.prototype.Update = function(fDeltaTime){};
