@@ -1,8 +1,6 @@
 
 
-var FileSystem = function(){
-    this.http = new XMLHttpRequest();
-};
+var FileSystem = function(){};
 
 FileSystem.prototype._OnComplete = function(resp){
     //console.log("_OnComplete resp", resp);
@@ -21,23 +19,24 @@ FileSystem.prototype._OnError = function(e){
 };
 
 FileSystem.prototype.ReadFile = function(resource, callback){
-    this.http.onprogress = this._OnProgress;
-    this.http.usercallback = callback || null;
-    this.http.onload  = this._OnComplete;
-    this.http.onerror = this._OnError;
-    this.http.myapp = this;
+    var http = new XMLHttpRequest();
+    http.onprogress = this._OnProgress;
+    http.usercallback = callback || null;
+    http.onload  = this._OnComplete;
+    http.onerror = this._OnError;
+    http.myapp = this;
     
-    this.http.onreadystatechange = function() {
+    http.onreadystatechange = function() {
       //if ((request.readyState == 4) && (request.status == 200)) // if DONE and SUCCESS
         //onsuccess(JSON.parse(request.responseText));
     };
-    this.http.open("GET", resource + ".xml", true);
-    this.http.send(null);
+    http.open("GET", resource + ".xml", true);//async
+    http.send(null);
 };
 
 FileSystem.prototype.ReadXMLFile = function(resource){
     var fs = new XMLHttpRequest();
-    fs.open("GET", resource + ".xml", false);
+    fs.open("GET", resource + ".xml", false);//syncronous
     fs.send(null);
     
     return fs.responseXML;
