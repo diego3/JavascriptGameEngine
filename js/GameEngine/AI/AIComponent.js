@@ -21,6 +21,11 @@ AIComponent.prototype.PosInit = function(){
 };
 
 AIComponent.prototype.Update = function(fDeltaTime){
+    
+    this.RotationTest(fDeltaTime);
+};
+
+AIComponent.prototype.RotationTest = function(fDeltaTime){
     var target = InputManager.GetMouseMovePosVec2();
     
     //http://stackoverflow.com/questions/2625021/game-enemy-move-towards-player
@@ -32,6 +37,9 @@ AIComponent.prototype.Update = function(fDeltaTime){
      //dot = dot < 0 ? dot : -dot;
     
     this.transform.rotation = Math.acos(dot);
-    
+};
+
+AIComponent.prototype.LerpTest = function(fDeltaTime){
+    //this.transform.pos = vec2.lerp(vec2.create(), vec2.create(), mpVec, fDeltaTime);
 };
 
