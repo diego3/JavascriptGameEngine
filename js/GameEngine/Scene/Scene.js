@@ -108,6 +108,10 @@ TestSceneNode.prototype.Render = function(scene){
     ctx.font = "24 pt Arial";
     ctx.fillStyle = "rgba(155,155,200,1)";
     ctx.fillText("ANGLE: "+agle, 800*0.5,10);
+    
+//    ctx.beginPath();
+//    ctx.arc(75, 75, 50, 0, 2 * Math.PI);
+//    ctx.stroke();
 };
 
 /**

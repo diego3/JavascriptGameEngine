@@ -10,6 +10,9 @@ var AIComponent = function(){
     this.right = vec2.fromValues(1,0);
     this.left = vec2.fromValues(-1,0);
     this.dot = vec2.fromValues(1,0);
+    
+    this.player = null;
+    this.playerTransform = null;
 };
 AIComponent.Extends(ActorComponent);
 AIComponent.NAME = "AIComponent";
@@ -20,6 +23,11 @@ AIComponent.prototype.PosInit = function(){
         return false;
     }
     this.transform = actor.GetComponent(TransformComponent.NAME);
+    
+    this.player = g_actMgr.GetActorByTag("player");
+    if(this.player){
+        this.playerTransform = this.player.GetComponent(TransformComponent.NAME);
+    }
 };
 
 AIComponent.prototype.Update = function(fDeltaTime){
@@ -28,10 +36,15 @@ AIComponent.prototype.Update = function(fDeltaTime){
 };
 
 AIComponent.prototype.RotationTest = function(fDeltaTime){
-    var target = InputManager.GetMouseMovePosVec2();
+    if(!this.playerTransform){
+        return;
+    }
+    
+    //var target = InputManager.GetMouseMovePosVec2();
+    var target = this.playerTransform.pos;
     
     //http://stackoverflow.com/questions/2625021/game-enemy-move-towards-player
-    var dist = vec2.distance(this.transform.pos, target);
+    //var dist = vec2.distance(this.transform.pos, target);
     var dir  = vec2.normalize(vec2.create(), target);
     var dot;
     

@@ -49,6 +49,8 @@ BaseApplication.prototype.Initialize = function(){
     
     InputManager.Init();
     
+    g_actMgr = new ActorManager();
+    
     this.RegisterDelegates();
     
     this.IsInitialized = true;

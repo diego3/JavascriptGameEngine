@@ -35,7 +35,8 @@ ActorFactory.prototype.CreateActor = function (actorResource) {
 
     //create the Actor instance
     var existingActorId = actorNode.getAttribute("id");
-    var actor = new Actor(existingActorId || factory.GetNextActorId());
+    var actorTag = actorNode.getAttribute("tag");
+    var actor = new Actor(existingActorId || factory.GetNextActorId(),actorTag);
     factory.actorMap[actor.GetId()] = actor;
 
     var children = actorNode.children;

@@ -1,4 +1,4 @@
-<Actor type="ball" id="">
+<Actor type="ball" tag="">
 
     <TransformComponent>
         <Position x="380" y="300" />

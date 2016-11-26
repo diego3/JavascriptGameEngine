@@ -5,6 +5,7 @@
 
 var g_GameApp = null;
 var g_evtMgr = null;
+var g_actMgr = null;
 
 define(function(require){ 
     require("./GameEngine/Core/Heranca1");
