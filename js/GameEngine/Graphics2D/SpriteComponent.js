@@ -34,7 +34,7 @@ SpriteComponent.prototype.Init = function(xmlData){
     
     //load and set this.texture with a Image instance
     var amg = new AssetManager();
-    this.texture = amg.LoadImage(textureSource);
+    this.texture = amg.GetImage(textureSource);
     return true;
 };
 
