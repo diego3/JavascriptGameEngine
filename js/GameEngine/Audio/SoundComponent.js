@@ -1,4 +1,6 @@
 
+//https://www.html5rocks.com/en/tutorials/webaudio/intro/
+//https://www.html5rocks.com/en/tutorials/webaudio/games/
 
 var SoundComponent = function(){
     /**

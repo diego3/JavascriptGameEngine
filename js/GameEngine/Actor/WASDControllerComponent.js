@@ -20,36 +20,6 @@ WASDControllerComponent.prototype.PosInit = function(){
     this.transform = actor.GetComponent(TransformComponent.NAME);
 };
 
-/*
-Math.radians = function(degrees) {
-  return degrees * Math.PI / 180;
-};
- 
-// Converts from radians to degrees.
-Math.degrees = function(radians) {
-  return radians * 180 / Math.PI;
-};*/
-
-function Rotate(vector2, degrees) {
-    var sin = Math.sin(degrees * (Math.PI /180));
-    var cos = Math.cos(degrees * (Math.PI/180));
-
-    var tx = vector2[0];
-    var ty = vector2[1];
-    vector2[0] = (cos * tx) - (sin * ty);
-    vector2[1] = (sin * tx) + (cos * ty);
-    return vector2;
-};
-
-function RotateVec2(vector2, degrees, speed){
-    var sin = Math.sin(degrees * (Math.PI/180));
-    var cos = Math.cos(degrees * (Math.PI/180));
-
-    vector2[0] = speed * cos;
-    vector2[1] = speed * sin;
-    return vector2;
-}
-
 WASDControllerComponent.prototype.Update = function(fDeltaTime){
     if(!this.transform){
         console.warn("Missing transform component to WASDController ");

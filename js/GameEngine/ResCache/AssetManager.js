@@ -18,17 +18,28 @@ AssetManager.prototype.OnLoadImage = function(e){
     }
 };
 
+AssetManager.prototype.OnLoadSound = function(e){
+    var $this = this.assetManager;
+     
+    $this.loadedItens++;
+    
+    if($this.loadedItens === $this.totalItens){
+        $this.loaded = true;
+        g_evtMgr.FireEvent("PRELOADED_AUDIORESOURCE_CACHE");
+    }
+};
+
 AssetManager.prototype.PreLoadImages = function(itensList){
     this.totalItens += itensList.length;
     for(var i=0; i < itensList.length; i++){
-        this.LoadImage(itensList[i]);
+        this.GetImage(itensList[i]);
     }
 };
 
 AssetManager.prototype.PreLoadSounds = function(soundList){
     this.totalItens += soundList.length;
     for(var i=0; i < soundList.length; i++){
-        this.LoadSound(soundList[i]);
+        this.GetSound(soundList[i]);
     }
 };
 
@@ -39,11 +50,11 @@ AssetManager.prototype.GetSound = function(soundFilePath){
         return this.assets[key];
     }
     
-    var s = new Audio(soundFilePath);
-    s.src = soundFilePath;
-    //s.onload = this.OnLoadSound;
-    this.assets[key] = s;
-    return s;
+    var audio = new Audio(soundFilePath);
+    audio.src = soundFilePath;
+    audio.addEventListener("canplaythrough", this.OnLoadSound, false);
+    this.assets[key] = audio;
+    return audio;
 };
 
 AssetManager.prototype.GetImage = function(resourcePath){

@@ -49,6 +49,6 @@ wsServer.on('request',function(request){
 	});
      
     websocket.on('close', function(reasonCode, description) {
-     console.log('WebSocket Connection from' + request.remoteAddress + 'closed.');
+        console.log('WebSocket Connection from' + request.remoteAddress + 'closed.');
     });
 });
