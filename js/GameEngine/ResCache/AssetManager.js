@@ -66,6 +66,7 @@ AssetManager.prototype.GetImage = function(resourcePath){
     
     var img = new Image();
     img.src = resourcePath;
+    img.assetManager = this;
     img.onload = this.OnLoadImage;
     this.assets[key] = img;
     return img;
