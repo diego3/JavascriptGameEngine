@@ -114,6 +114,35 @@ TestSceneNode.prototype.Render = function(scene){
 //    ctx.stroke();
 };
 
+//Just for Test and learning
+var SpriteSceneNode = function(actorId,renderComponent,transformComponent){
+    this.actorId = actorId;
+    this.renderComponent = renderComponent;
+    this.transformComponent = transformComponent;
+};
+SpriteSceneNode.Extends(SceneNode);
+
+//https://developer.mozilla.org/en/docs/Web/API/CanvasRenderingContext2D
+SpriteSceneNode.prototype.Render = function(scene){
+    var ctx = scene.GetRenderer();
+    ctx.save();
+    
+    var pos = this.transformComponent.position;
+    var texture = this.renderComponent.texture;
+    if(!texture) return false;
+    
+    //ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+    var wCenter = pos[0] + 128 /2;
+    var hCenter = pos[1] + 128 /2;
+    ctx.translate(wCenter, hCenter);/// make sure pivot is moved to center
+    var agle = (this.transformComponent.rotation); /** Math.PI / 180*/;
+    ctx.rotate(agle);//angle should be radians
+    ctx.translate(-wCenter, -hCenter); /// translate back before drawing the sprite
+    
+    ctx.drawImage(texture, 0, 0, 128, 128, pos[0], pos[1], 128, 128);
+    ctx.restore();
+};
+
 /**
  * The top-level management of the entire scene node hierarchy rests in the capable
  * hands of the Scene class. It serves as the top-level entry point for updating, render-

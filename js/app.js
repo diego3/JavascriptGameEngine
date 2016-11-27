@@ -32,6 +32,7 @@ define(function(require){
     //specific components
     require("./GameEngine/Actor/WASDControllerComponent");
     require("./GameEngine/AI/AIComponent");
+    require("./GameEngine/Graphics2D/SpriteComponent");
     
     g_GameApp = new BaseApplication();
     //console.log(g_GameApp);

@@ -4,9 +4,13 @@
         <Position x="380" y="300" />
     </TransformComponent>
     
-    <BaseRenderComponent>
+    <!--BaseRenderComponent>
         <Color r="255" g="0" b="0" a="1" />
-    </BaseRenderComponent>
+    </BaseRenderComponent-->
+    
+    <SpriteComponent>
+        <Texture src="Assets/Art/box.png" width="128" height="128"/>
+    </SpriteComponent>
     
     <AIComponent>
         

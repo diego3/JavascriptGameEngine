@@ -11,6 +11,7 @@ ActorFactory.prototype.RegisterComponentFactory = function () {
     this.componentFactory[BaseRenderComponent.NAME] = BaseRenderComponent;
     this.componentFactory[WASDControllerComponent.NAME] = WASDControllerComponent;
     this.componentFactory[AIComponent.NAME] = AIComponent;
+    this.componentFactory[SpriteComponent.NAME] = SpriteComponent;
     
     
     //http://robdodson.me/javascript-design-patterns-factory/
@@ -56,11 +57,8 @@ ActorFactory.prototype.CreateActor = function (actorResource) {
 };
 
 ActorFactory.prototype.CreateComponent = function (xmlNode) {
-    //console.log("CreateComponent node", xmlNode);
-    //xmlNode.getAttribute("type");
     var name = xmlNode.nodeName;
     
-    //console.log("this.componentFactory", this.componentFactory);
     if (!this.componentFactory[name]) {
         return null;
     }
@@ -75,21 +73,4 @@ ActorFactory.prototype.CreateComponent = function (xmlNode) {
         return null;
     }
     return component;
-};
-
-/**
- * This is just for quick test
- * 
- * @returns {ActorFactory.actorMap}
- */
-ActorFactory.prototype.CreateBall = function () {
-    //TODO  load all the actor from a json or xml
-    var ball = new Ball(this.GetNextActorId());
-
-    var brender = new BallRendererComponent();
-    ball.AddComponent(brender);
-
-    this.actorMap[ball.m_id] = ball;
-
-    return ball;
 };
