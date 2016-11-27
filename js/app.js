@@ -18,6 +18,7 @@ define(function(require){
     require("./GameEngine/Utils/String");   
     require("./GameEngine/Utils/Random");
     require("./GameEngine/Utils/FileSystem");
+    require("./GameEngine/ResCache/AssetManager");
     require("./GameEngine/Actor/Actor");
     require("./GameEngine/Actor/ActorFactory");
     require("./GameEngine/Actor/ActorManager");

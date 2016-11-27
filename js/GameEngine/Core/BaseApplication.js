@@ -66,8 +66,12 @@ BaseApplication.prototype.RegisterDelegates = function(){
 };
 
 var AddActorTestDelegate=function(){
-    var ball = this.GameLogic.CreateActor("../../../Assets/Actor/Ball");
-    console.log(ball);
+    //var ball = this.GameLogic.CreateActor("../../../Assets/Actor/Ball");
+    //console.log(ball);
+    
+    var assetMgr = new AssetManager();
+    var ret= assetMgr.LoadImage("Assets/Art/desert-foreground.png");
+    console.log("ret", ret);
 };
 
 //BaseApplication.prototype.
