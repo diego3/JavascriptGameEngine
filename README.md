@@ -5,7 +5,37 @@ An simple javascript game engine.
 I'am developing this engine only for learning some principles 
 and patterns applicables to the game development!
 
-The main aim is decoupling between all the game systems as possible
+
+# Game Coding Complete 4th
+
+The architecture used by me int this engine is absolutly hard based on this book,
+
+but this project is web, so some things I am adapting and try to use the new HTML5
+
+components, as such WebSockets, WebWorkers, WebAudio etc.
+
+There are too some pieces that are not possible to reproduce in a web environment, such like 
+
+Scripting, because we are already in a scripting language.
+
+Other thing is memory management! Javascript is a managed script language, so it has a 
+
+garbage collector. I think it is an plus for every one who is beggining to game development, basically
+
+you don't need to worry abount memory.
+
+
+The main aim is learn the tools on game dev in a professional level!
+
+Some cool things to learn:
+
+* All the engine should be in a good and decent OOP way, allowing a code flexible and 
+
+easy to mantain.
+
+* HTML5 Tech, yeah, there are a lot of fun APIs to explore, that a big world :)
+
+
 
 
 Features and todos
@@ -21,6 +51,16 @@ Features and todos
 - [ ]  Tile mapping 
 
 - [ ]  Level loading screen
+
+- [ ]  WebSound API
+
+- [ ]  WebSocket API
+
+- [ ]  Fullscreen API
+
+- [ ]  2D Camera scrolling
+
+
 
 
 Links
