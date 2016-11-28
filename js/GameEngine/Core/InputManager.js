@@ -138,6 +138,11 @@ var InputManager = {
     },
     OnKey: function(ev, key, pressed) {
         this.keys[key] = pressed;
+
+        // prevent window from scrolling when pressing UP or DOWN or SPACE
+        if (key === KEY.UP || key === KEY.DOWN || key === KEY.SPACE) {
+            ev.preventDefault();
+        }
     }
 
 };
